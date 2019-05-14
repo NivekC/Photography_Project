@@ -1,6 +1,10 @@
 <?php
 session_start();
 include('../DB/db.php');
+if(!isset($_SESSION['username']))
+{
+    header("location:../authenticator/login.php");
+}
 
 if(isset($_POST['update'])){
     header("Refresh:0");
@@ -57,7 +61,7 @@ if(isset($_POST['update'])){
     <link rel="stylesheet" href="../assets/css/animate.min.css">
     <!-- Custom styles for this template -->
     <link href="../assets/css/main.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../login/loginAssets/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../authenticator/loginAssets/css/main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -82,18 +86,17 @@ if(isset($_POST['update'])){
                 </a>
             </div>
             <!--logo end-->
-
-            <!--main menu -->
-            <div class="side_menu_section">
+<!--main menu -->
+<div class="side_menu_section">
                 <ul class="menu_nav">
                     <li>
                         <a href="index.php">
-                            Home
+                            Gallery
                         </a>
                     </li>
-                    <li>
+                    <li >
                         <a href="about.php">
-                            About Us
+                            About Me
                         </a>
                     </li>
                     <li>
@@ -102,8 +105,8 @@ if(isset($_POST['update'])){
                         </a>
                     </li>
                     <li>
-                        <a href="portfolio.php">
-                            Portfolio
+                        <a href="booking.php">
+                            Bookings
                         </a>
                     </li>
                     <li class="active">
@@ -116,22 +119,17 @@ if(isset($_POST['update'])){
                             Contact
                         </a>
                     </li>
+                    <li>
+                        <a href="../authenticator/logout.php">
+                            logout
+                        </a>
+                    </li>
                 </ul>
             </div>
-            <!--main menu end -->
+            <!--main menu end -->            <!--filter menu -->
 
-            <!--filter menu -->
-            <div class="side_menu_section">
-                <h4 class="side_title">filter by:</h4>
-                <ul  id="filtr-container"  class="filter_nav">
-                    <li  data-filter="*" class="active"><a href="javascript:void(0)" >all</a></li>
-                    <li data-filter=".branding"> <a href="javascript:void(0)">branding</a></li>
-                    <li data-filter=".design"><a href="javascript:void(0)">design</a></li>
-                    <li data-filter=".photography"><a href="javascript:void(0)">photography</a></li>
-                    <li data-filter=".architecture"><a href="javascript:void(0)">architecture</a></li>
-                </ul>
-            </div>
-            <!--filter menu end -->
+
+            
 
 
             <!--social and copyright -->
@@ -204,7 +202,7 @@ if(isset($_POST['update'])){
                         </div>
                         <div class="form-group shadow-textarea">
                             <label for="exampleFormControlTextarea6">Enter your Bio</label>
-                            <textarea class="form-control z-depth-1"  name="bio" id="exampleFormControlTextarea6" rows="3" cols="70" placeholder="Write something here..."></textarea>
+                            <textarea class="form-control z-depth-1"  name="bio" id="exampleFormControlTextarea6" rows="3" cols="70" placeholder="Write something here..."><?php echo $bio?></textarea>
                         </div>
 			
 

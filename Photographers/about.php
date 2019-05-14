@@ -1,7 +1,10 @@
 <?php
 session_start();
 include('../DB/db.php');
-
+if(!isset($_SESSION['username']))
+{
+    header("location:../authenticator/login.php");
+}
 
 
 		$con = new DBConnector;     
@@ -73,42 +76,45 @@ include('../DB/db.php');
 
             <!--main menu -->
             <div class="side_menu_section">
-                    <ul class="menu_nav">
-                        <li>
-                            <a href="index.php">
-                                Gallery
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="about.php">
-                                About Me
-                            </a>
-                        </li>
-                        <li>
-                            <a href="services.php">
-                                Services
-                            </a>
-                        </li>
-                        <li>
-                            <a href="portfolio.php">
-                                Bookings
-                            </a>
-                        </li>
-                        <li>
-                            <a href="profile.php">
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="contact.php">
-                                Photos
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!--main menu end -->
-
-            <!--filter menu -->
+                <ul class="menu_nav">
+                    <li>
+                        <a href="index.php">
+                            Gallery
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="about.php">
+                            About Me
+                        </a>
+                    </li>
+                    <li>
+                        <a href="services.php">
+                            Services
+                        </a>
+                    </li>
+                    <li>
+                        <a href="booking.php">
+                            Bookings
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.php">
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contact.php">
+                            Contact
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../authenticator/logout.php">
+                            logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--main menu end -->            <!--filter menu -->
 
             <!--filter menu end -->
 
@@ -154,21 +160,12 @@ include('../DB/db.php');
                                         <p><?php
                                         if(empty($bio))
                                         {
-                                            echo $bo;
-                                        }else {
                                             echo "<h4>Visit the <a href='profile.php'>profile</a> to add a your Bio</a></h4>";
+                                        }else {
+                                            echo $bio;
+                                            
                                         }
                                         ?>
-                                         
-                                          <p>We also deal in the supply of :<br>
-                                          Bouncing Castles<br>
-                                          Trampolines<br>
-                                          Magicians<br>
-                                          Clowns<br>
-                                          Games and team building<br>
-                                          Candy floss and more for entertainment.<br>
-                                        </p>
-                                      </p>
                                         <!--=================== counter start====================-->
                                         <div class="pt50">
                                             <div class="row justify-content-center">

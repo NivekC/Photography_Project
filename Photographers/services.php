@@ -1,15 +1,42 @@
 <?php
-
-if(isset($_POST['submit'])){
-    $category = $_POST['category'];
-$description = $_POST['description'];
-
-echo $category;
-echo $description;
-
+session_start();
+include_once('../DB/db.php');
+if(!isset($_SESSION['username']))
+{
+    header("location:../authenticator/login.php");
 }
 
+$con = new DBConnector;
+$uname = $_SESSION['username'];
+$res =  mysqli_query($con->conn, "SELECT photographers.photographersID FROM `photographers` JOIN users ON users.UserID = photographers.UserID WHERE users.username = '$uname'");
+if($res->num_rows > 0)
+{
+    while($row = $res->fetch_assoc()) {
+      $pId = $row['photographersID'];           
+    }
+}
+if(isset($_POST['submit'])){
+    $category = $_POST['category'];
+    $description = $_POST['description'];
 
+  
+
+    
+
+        $ssql = "INSERT INTO `services`(`category`, `description`, `photographerID`) VALUES ('$category','$description','$pId')";
+        echo $ssql;
+        $sql = mysqli_query($con->conn,$ssql);
+        if($sql === true){
+           echo "Twaz Successfull";
+            header('location:services.php');
+        }
+        
+        
+    }
+
+    
+    $ssql01 = "SELECT * FROM `services` WHERE photographerID = '$pId'";
+    $sql02 = mysqli_query($con->conn,$ssql01);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +69,19 @@ echo $description;
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="../folderB/modal.css">
+    <style>
+        #mdlbtn{
+            height: 300px; 
+            background-color: white;
+            color: black;
+            border: 2px solid #555555;
+        }
+        #mdlbtn:hover{
+            background-color: #555555;
+            color: white;
+        }
+ 
+    </style>
 </head>
 <body>
 <div class="loader">
@@ -71,40 +111,45 @@ echo $description;
 
             <!--main menu -->
             <div class="side_menu_section">
-                    <ul class="menu_nav">
-                        <li>
-                            <a href="index.php">
-                                Gallery
-                            </a>
-                        </li>
-                        <li>
-                            <a href="about.php">
-                                About Me
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="services.php">
-                                Services
-                            </a>
-                        </li>
-                        <li>
-                            <a href="portfolio.php">
-                                Bookings
-                            </a>
-                        </li>
-                        <li>
-                            <a href="profile.php">
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="contact.php">
-                                Photos
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!--main menu end -->
+                <ul class="menu_nav">
+                    <li>
+                        <a href="index.php">
+                            Gallery
+                        </a>
+                    </li>
+                    <li >
+                        <a href="about.php">
+                            About Me
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="services.php">
+                            Services
+                        </a>
+                    </li>
+                    <li>
+                        <a href="booking.php">
+                            Bookings
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.php">
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contact.php">
+                            Contact
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../authenticator/logout.php">
+                            logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--main menu end -->            <!--filter menu -->
 
             <!--filter menu -->
 
@@ -145,94 +190,21 @@ echo $description;
         <!--=================== content body ====================-->
         <div class="col-lg-10 col-md-9 col-12 body_block  align-content-center">
             <div>
+            
 <!--=================== image card start here  (has two section left and right )====================-->
                 <div class="img_card">
                     <div class="row justify-content-center">
                         <div class="col-md-6 col-7 content_section">
+                        
                             <div class="content_box">
                                 <div class="content_box_inner">
                                     <div class="row justify-content-center">
 <!--=================== services boxes start here  ====================-->
-                                        <div class="col-md-6 col-12">
-                                            <div class="img_box_one text-left">
-                                                <img src="../assets/img/icons/typo.png" alt="services icon">
-                                                <div class="content">
-                                                    <h5>
-                                                        Wedding Shoots
-                                                    </h5>
-                                                    <p>
-                                                        I capture the moments of couples special day on film.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="img_box_one text-left">
-                                                <img src="../assets/img/icons/flask.png" alt="services icon">
-                                                <div class="content">
-                                                    <h5>
-                                                        Event Photography
-                                                    </h5>
-                                                    <p>
-                                                        We offer professional photography services to both personal and at a corporate level, we Specialise in covering all sorts of events both out and in doors.  We have matured professionalism in Corporate, Events, Family, Shoots, Pets and More
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="img_box_one text-left">
-                                                <img src="../assets/img/icons/compass.png" alt="services icon">
-                                                <div class="content">
-                                                    <h5>
-                                                        Social Media Management
-                                                    </h5>
-                                                    <p>
-                                                        Amani Photography and Events have well equipt media and communications professionals who offer socila media management to clients who want to stand out in the industry.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="img_box_one text-left">
-                                                <img src="../assets/img/icons/magic.png" alt="services icon">
-                                                <div class="content">
-                                                    <h5>
-                                                        Brand Identity
-                                                    </h5>
-                                                    <p>
-                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="img_box_one text-left">
-                                                <img src="../assets/img/icons/idea.png" alt="services icon">
-                                                <div class="content">
-                                                    <h5>
-                                                        Interior Design
-                                                    </h5>
-                                                    <p>
-                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="img_box_one text-left">
-                                                <img src="../assets/img/icons/satelite.png" alt="services icon">
-                                                <div class="content">
-                                                    <h5>
-                                                        Collateral Design
-                                                    </h5>
-                                                    <p>
-                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <button class="btn btn-primary" onclick="document.getElementById('id01').style.display='block'" style="width:auto; text-align: center"><span><img src="https://img.icons8.com/ios/50/000000/plus-math-filled.png"></span></button>
+                                <div class="col-md-6 col-12">
+                                <div class="img_box_one text-left">
+                                    <div class="content">
+                                    <button id="mdlbtn" style="width:250px;" class="btn btn-primary" onclick="document.getElementById('id01').style.display='block'" style="width:auto; text-align: center"><span>
+                                    <h5>Add Service</h5><img src="https://img.icons8.com/ios/50/000000/plus-math-filled.png"></span></button>
                                             <div id="id01" class="modal">
   
                                                     <form class="modal-content animate md-form" action="services.php" method="POST">
@@ -249,17 +221,6 @@ echo $description;
                                                           <label for="exampleFormControlTextarea6">Enter the description of the service</label>
                                                           <textarea class="form-control z-depth-1" name="description" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
                                                         </div>
-                                                      
-                                                          <div class="input-group">
-                                                              <div class="input-group-prepend">
-                                                                  <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                                              </div>
-                                                              <div class="custom-file">
-                                                                  <input type="file" class="custom-file-input" id="inputGroupFile01"
-                                                                  aria-describedby="inputGroupFileAddon01">
-                                                                  <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                                              </div>
-                                                              </div>
                                                           
                                                         <button class="btn btn-primary" name="submit"  style="text-align: center;width: auto;padding: 10px 18px; " type="submit">Save</button>
                                                       </div>
@@ -270,8 +231,31 @@ echo $description;
                                                       </div>
                                                     </form>
                                                   </div>
-                                        </div>
- <!--=================== services boxes end here  ====================-->
+                                        
+                                    </div>
+                                    </div>
+                                </div>
+
+                                        
+                                            <div class="img_box_one text-left">     
+                                                <div class="content">
+                                                <?php 
+                                                    if($sql02->num_rows > 0)
+                                                    {
+                                                        while($row = $sql02->fetch_assoc()) {
+                                                        $category = $row['category'];
+                                                        $description = $row['description'];
+                                                        echo "<h5>$category</h5>";
+                                                        echo "<p>$description</p>"; 
+                                                        
+                                                        echo "<br>";
+                                                        }
+                                                    }
+                                                ?>
+                                                </div>
+                                            </div>
+                                       
+                                        <!--=================== services boxes end here  ====================-->
                                     </div>
                                 </div>
                             </div>
@@ -321,6 +305,3 @@ echo $description;
 
 </body>
 </html>
-
-I am an expert photographer who does his job to the best of his ability i'm very punctual when it comes to completing tasks and am also highly rated by customers.
- Don't hesitate please hit the book button and i promise you wont be disappointed.

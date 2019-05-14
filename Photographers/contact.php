@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    if(!isset($_SESSION['username']))
+    {
+        header("location:../authenticator/login.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,19 +20,19 @@
     <!--<link rel="icon" href="fav.ico">-->
     <!-- ========== STYLESHEETS ========== -->
     <!-- Bootstrap CSS -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <!-- Fonts Icon CSS -->
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/css/et-line.css" rel="stylesheet">
-    <link href="assets/css/ionicons.min.css" rel="stylesheet">
+    <link href="../assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../assets/css/et-line.css" rel="stylesheet">
+    <link href="../assets/css/ionicons.min.css" rel="stylesheet">
     <!-- Carousel CSS -->
-    <link href="assets/css/slick.css" rel="stylesheet">
+    <link href="../assets/css/slick.css" rel="stylesheet">
     <!-- Magnific-popup -->
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
     <!-- Animate CSS -->
-    <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="../assets/css/animate.min.css">
     <!-- Custom styles for this template -->
-    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="../assets/css/main.css" rel="stylesheet">
 </head>
 <body>
 <div class="loader">
@@ -44,7 +51,7 @@
             <!--logo -->
             <div class="logo_box">
                 <a href="#">
-                    <img src="assets/img/logo1.jpg" alt="Amani">
+                    <img src="../assets/img/logo1.jpg" alt="Amani">
                 </a>
             </div>
             <!--logo end-->
@@ -54,12 +61,12 @@
                 <ul class="menu_nav">
                     <li>
                         <a href="index.php">
-                            Home
+                            Gallery
                         </a>
                     </li>
-                    <li>
+                    <li >
                         <a href="about.php">
-                            About Us
+                            About Me
                         </a>
                     </li>
                     <li>
@@ -68,36 +75,29 @@
                         </a>
                     </li>
                     <li>
-                        <a href="portfolio.php">
-                            Portfolio
+                        <a href="booking.php">
+                            Bookings
                         </a>
                     </li>
                     <li>
                         <a href="profile.php">
-                            Blog
+                            Profile
                         </a>
                     </li>
-                    <li  class="active">
-                        <a href="contact.php">
+                    <li class="active">
+                        <a  href="contact.php">
                             Contact
                         </a>
                     </li>
+                    <li>
+                        <a href="../authenticator/logout.php">
+                            logout
+                        </a>
+                    </li>
                 </ul>
             </div>
-            <!--main menu end -->
+            <!--main menu end -->            <!--filter menu -->
 
-            <!--filter menu -->
-            <div class="side_menu_section">
-                <h4 class="side_title">filter by:</h4>
-                <ul  id="filtr-container"  class="filter_nav">
-                    <li  data-filter="*" class="active"><a href="javascript:void(0)" >all</a></li>
-                    <li data-filter=".branding"> <a href="javascript:void(0)">branding</a></li>
-                    <li data-filter=".design"><a href="javascript:void(0)">design</a></li>
-                    <li data-filter=".photography"><a href="javascript:void(0)">photography</a></li>
-                    <li data-filter=".architecture"><a href="javascript:void(0)">architecture</a></li>
-                </ul>
-            </div>
-            <!--filter menu end -->
 
 
             <!--social and copyright -->
@@ -144,7 +144,7 @@
                                         <ul class="nosyely_list pt50">
                                             <li>
                                                 <div class="img_box_two">
-                                                    <img src="assets/img/icons/satelite.png" alt="info list">
+                                                    <img src="../assets/img/icons/satelite.png" alt="info list">
                                                     <div class="content align-items-center">
                                                         <p>
                                                             Ronald Ngala ST , No234/56<br/>
@@ -155,7 +155,7 @@
                                             </li>
                                             <li>
                                                 <div class="img_box_two">
-                                                    <img src="assets/img/icons/scheme.png" alt="info list">
+                                                    <img src="../assets/img/icons/scheme.png" alt="info list">
                                                     <div class="content align-items-center">
                                                         <p>
                                                           Amaniphotography@gmail.com
@@ -165,7 +165,7 @@
                                             </li>
                                             <li>
                                                 <div class="img_box_two">
-                                                    <img src="assets/img/icons/smartphone.png" alt="info list">
+                                                    <img src="../assets/img/icons/smartphone.png" alt="info list">
                                                     <div class="content align-items-center">
                                                         <p>
                                                             +254706492324
@@ -213,25 +213,25 @@
 
 
 <!-- jquery -->
-<script src="assets/js/jquery.min.js"></script>
+<script src="../assets/js/jquery.min.js"></script>
 <!-- bootstrap -->
-<script src="assets/js/popper.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/waypoints.min.js"></script>
+<script src="../assets/js/popper.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script src="../assets/js/waypoints.min.js"></script>
 <!--slick carousel -->
-<script src="assets/js/slick.min.js"></script>
+<script src="../assets/js/slick.min.js"></script>
 <!--Portfolio Filter-->
-<script src="assets/js/imgloaded.js"></script>
-<script src="assets/js/isotope.js"></script>
+<script src="../assets/js/imgloaded.js"></script>
+<script src="../assets/js/isotope.js"></script>
 <!-- Magnific-popup -->
-<script src="assets/js/jquery.magnific-popup.min.js"></script>
+<script src="../assets/js/jquery.magnific-popup.min.js"></script>
 <!--Counter-->
-<script src="assets/js/jquery.counterup.min.js"></script>
+<script src="../assets/js/jquery.counterup.min.js"></script>
 <!-- WOW JS -->
-<script src="assets/js/wow.min.js"></script>
+<script src="../assets/js/wow.min.js"></script>
 <!--map -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuahgsm_qfH1F3iywCKzZNMdgsCfnjuUA"></script>
 <!-- Custom js -->
-<script src="assets/js/main.js"></script>
+<script src="../assets/js/main.js"></script>
 </body>
 </html>

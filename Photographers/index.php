@@ -1,5 +1,22 @@
 <?php
 session_start();
+include_once('../DB/db.php');
+if(!isset($_SESSION['username']))
+{
+    header("location:../authenticator/login.php");
+}
+$con = new DBConnector;
+
+$uname = $_SESSION['username'];
+$res =  mysqli_query($con->conn, "SELECT photographers.photographersID FROM `photographers` JOIN users ON users.UserID = photographers.UserID WHERE users.username = '$uname'");
+if($res->num_rows > 0)
+{
+    while($row = $res->fetch_assoc()) {
+      $pId = $row['photographersID'];           
+    }
+}
+$ssql = "SELECT photographs FROM `gallery` WHERE photographersID = 1;";
+$sql = mysqli_query($con->conn,$ssql);
 
 ?>
 <!DOCTYPE html>
@@ -30,6 +47,23 @@ session_start();
     <link rel="stylesheet" href="../assets/css/animate.min.css">
     <!-- Custom styles for this template -->
     <link href="../assets/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../folderB/modal.css">
+
+    <style>
+        #mdlbtn{
+            height: 300px; width: 300px; margin: 5px; 
+            background-color: white;
+            color: black;
+            border: 2px solid #555555;
+        }
+        #mdlbtn:hover{
+            background-color: #555555;
+            color: white;
+        }
+ 
+    </style>
 </head>
 <body>
 <div class="loader">
@@ -72,7 +106,7 @@ session_start();
                         </a>
                     </li>
                     <li>
-                        <a href="portfolio.php">
+                        <a href="booking.php">
                             Bookings
                         </a>
                     </li>
@@ -81,9 +115,14 @@ session_start();
                             Profile
                         </a>
                     </li>
-                    <li>
+                   <li>
                         <a href="contact.php">
-                            Photos
+                            Contact
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../authenticator/logout.php">
+                            logout
                         </a>
                     </li>
                 </ul>
@@ -133,153 +172,71 @@ session_start();
             <div class="portfolio">
                 <div class="container-fluid">
                     <!--=================== masaonry portfolio start====================-->
-                    <div class="grid img-container justify-content-center no-gutters">
-                        <div class="grid-sizer col-sm-12 col-md-6 col-lg-3"></div>
-                        <div class="grid-item branding  col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/image1.jpg" title="project name 1">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/image1.jpg" alt="" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
+                   
+                            <!-- Button trigger modal -->
+                            <button id="mdlbtn" style="" class="btn btn-default" onclick="document.getElementById('id01').style.display='block'" style="width:auto; text-align: center"><span>
+                            <h5 style="font-size:20px;" >Add Photographs</h5>
+                            <i style="font-size:70px;" class="material-icons">add</i></span></button>
+                     
+                            <!-- Modal -->
+                            <div id="id01" class="modal" >
+  
+                            <form class="modal-content animate md-form" action="upload.php" method="POST" enctype="multipart/form-data">
+                                <div class="imgcontainer">
+                                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                <h1>Add Photographs</h1>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  branding architecture  col-sm-12 col-md-6">
-                            <a href="../assets/img/portfolio/home-port2.png" title="project name 2">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/amani_wed.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
+
+                                <div class="container">
+                                    <label for="uname"><b>Category</b></label>
+                                    <input type="text" placeholder="Enter category" name="category" required>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                                         </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  design col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port3.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/boat.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="fileToUpload[]" id="inputGroupFile01"
+                                            aria-describedby="inputGroupFileAddon01" multiple >
+                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                         </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  photography design col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port4.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/lady.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
                                         </div>
-                                    </div>
+                                   
+                                <button class="btn btn-primary" name="submit"  style="text-align: center;width: auto;padding: 10px 18px; " type="submit">Save</button>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  branding photography  col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port5.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/mama.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
+                            
+                                <div class="container" style="background-color:#f1f1f1">
+                                <button class="btn btn-danger" style=" width: auto;padding: 10px 18px;" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                                
                                 </div>
-                            </a>
-                        </div>
-                        <div class="grid-item   architecture design col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port6.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/karurawed.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  photography architecture col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port7.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/wedding mama.jpeg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  branding design  col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port8.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/town.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item architecture  col-sm-12 col-md-6 col-lg-6">
-                            <a href="../assets/img/portfolio/home-port9.png" title="project name 4">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/wed2.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                            </form>
+                            </div>
+                
                     <!--=================== masaonry portfolio end====================-->
-                </div>
-            </div>
-        </div>
+        <?php 
+            if($sql->num_rows > 0)
+            {
+                while($row = $sql->fetch_assoc()) {
+                $images = $row['photographs'];
+                echo "<img src='$images'  alt='pro1'  width='300px;' height='300px;' style='margin: 5px;'/> ";
+                echo "  ";        
+                }
+            }
+        ?>
         <!--=================== content body end ====================-->
     </div>
 </div>
 
-
+<script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+</script>
 <!-- jquery -->
 <script src="../assets/js/jquery.min.js"></script>
 <!-- bootstrap -->

@@ -1,15 +1,19 @@
 <?php
 session_start();
 include('../DB/db.php');
+<<<<<<< HEAD
 if(!isset($_SESSION['username']))
 {
     header("location:../authenticator/login.php");
 }
+=======
+>>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
 
 if(isset($_POST['update'])){
     header("Refresh:0");
 }
 
+<<<<<<< HEAD
 		$con = new DBConnector;     
         $sql = mysqli_query($con->conn, "SELECT * FROM `photographers`");
         while($row=mysqli_fetch_array($sql)){
@@ -23,6 +27,21 @@ if(isset($_POST['update'])){
 
         while($row=mysqli_fetch_array($sql1)){
             $fname = $row['fname'];
+=======
+		$con = new DBConnector;
+    $sql = mysqli_query($con->conn, "SELECT * FROM `photographers`");
+    while($row=mysqli_fetch_array($sql)){
+
+        $bio = $row['Description'];
+        $userID  = $row['UserID'];
+
+    }
+        $sql1 = mysqli_query($con->conn, "SELECT * FROM `users` WHERE `UserID` = $userID ");
+
+
+      while($row=mysqli_fetch_array($sql1)){
+      $fname = $row['fname'];
+>>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
 			$lname = $row['lname'];
 			$email = $row['email'];
 			$username = $row['username'];
@@ -30,6 +49,7 @@ if(isset($_POST['update'])){
 
         }
 
+<<<<<<< HEAD
         $res =  mysqli_query($con->conn, "SELECT photographers.photographersID FROM `photographers` JOIN users ON users.UserID = photographers.UserID ");
         if($res->num_rows > 0)
         {
@@ -43,6 +63,10 @@ if(isset($_POST['update'])){
        
     
 	   
+=======
+
+
+>>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
 ?>
 
 <!DOCTYPE html>
@@ -73,11 +97,24 @@ if(isset($_POST['update'])){
     <link rel="stylesheet" href="../assets/css/animate.min.css">
     <!-- Custom styles for this template -->
     <link href="../assets/css/main.css" rel="stylesheet">
+<<<<<<< HEAD
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <style>
     #content{
+=======
+<<<<<<< HEAD
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style(2).css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+=======
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+      #content{
+>>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
         margin-top: 80px;
       }/*
       .crds{
@@ -184,14 +221,20 @@ if(isset($_POST['update'])){
         padding: 8px;
         margin-top: 20px;
       }
+<<<<<<< HEAD
     
     </style>
+=======
+
+   </style>
+>>>>>>> 34ae1e1f57dfece46b237a5c8d09ebdd8b6be23d
+>>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
 </head>
 <body>
-<div class="loader">
+<!-- <div class="loader">
     <div class="loader-outter"></div>
     <div class="loader-inner"></div>
-</div>
+</div> -->
 
 <div class="body-container container-fluid">
     <a class="menu-btn" href="javascript:void(0)">
@@ -291,13 +334,73 @@ if(isset($_POST['update'])){
 
         <!--=================== content body ====================-->
         <div class="col-lg-10 col-md-9 col-12 body_block  align-content-center">
+
+
+<section>
+  <div class="card">
+      <div class="box">
+          <div class="img">
+
+              <img class="card-img-top img" src="<?php echo 'data:image/jpeg;base64,'.base64_encode( $image ); ; ?>" width="200" height="400" alt="Card image cap">
+            </div>
+              <hr>
+              <h4 class ="card-title"><?php echo $fname." ". $lname?></h4>
+              <div class="contents">
+                 <p class="card-text">Phone number: 0<?php echo $contact; ?></p>
+                <p class="card-text">Email:  <?php echo $email; ?></p>
+                <?php echo $userID ?>
+                <button type="button"  class="btn btn-sm btn-success" data-toggle="modal" data-target="<?php echo "#$userID";?>"  >Details</button>
+              </div>
+
+         </div>
+       </div>
+    </section>
+
+  <div class="modal fade" id="<?php echo "$userID";?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="center-block col-sm-12" style = "position:center;.">
+                <img src="<?php echo 'data:image/jpeg;base64,'.base64_encode( $image ); ; ?>" width="200" class= "details img-responsive">
+              </div>
+              <div class="col-sm-12">
+              <h4><?php echo $firstname." ". $lastname?></h4>
+               <h5><?php echo $type?></h5>
+              <p><?php echo $description; ?></p>
+                <hr>
+                 <p>Phone number: 0<?php echo $phone; ?></p>
+                <p>Email:  <?php echo $email; ?></p>
+                <p>Location:  <?php echo $constituency.", ".$ward; ?></p>
+               </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="<?php echo base_url('bk/booking_view'); ?> " ><button type="button" class="btn btn-primary" >Book</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
             <!--=================== filter portfolio start====================-->
+<<<<<<< HEAD
            
 <section>
+=======
+            <!-- <div class="portfolio gutters grid img-container">
+                <div class="grid-sizer col-sm-12 col-md-6 col-lg-3"></div>
+                <section>
+>>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
 <div class="card">
     <div class="box">
         <div class="img">
 
+<<<<<<< HEAD
             <img class="card-img-top img" src="<?php echo $fname; ?>" width="200" height="400" alt="Card image cap">
           </div>
             <hr>
@@ -307,13 +410,30 @@ if(isset($_POST['update'])){
               <p class="card-text">Email:  <?php echo $email; ?></p>
             <?php echo $userID ?>
               <button type="button"  class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal"  >Details</button>
+=======
+            <img class="card-img-top img" src="<?php echo 'data:image/jpeg;base64,'.base64_encode( $image ); ; ?>" width="200" height="400" alt="Card image cap">
+          </div>
+            <hr>
+            <h4 class ="card-title"><?php echo $firstname." ". $lastname?></h4>
+            <h5><?php echo $type?></h5>
+            <div class="contents">
+               <p class="card-text">Phone number: 0<?php echo $phone; ?></p>
+              <p class="card-text">Email:  <?php echo $email; ?></p>
+              <p class="card-text">Location:  <?php echo $constituency.", ".$ward; ?></p>
+             
+              <button type="button"  class="btn btn-sm btn-success" data-toggle="modal" data-target="<?php echo "#$id";?>"  >Details</button>
+>>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
             </div>
              
        </div>
      </div> 
   </section>
 
+<<<<<<< HEAD
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+=======
+<div class="modal fade" id="<?php echo "$id";?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+>>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -324,6 +444,7 @@ if(isset($_POST['update'])){
       </div>
       <div class="modal-body">
         <div class="center-block col-sm-12" style = "position:center;.">
+<<<<<<< HEAD
               <img src="<?php echo $fname ?>" width="200" class= "details img-responsive">
             </div>
             <div class="col-sm-12">
@@ -342,10 +463,23 @@ if(isset($_POST['update'])){
               <hr>
                <p>Phone number: <?php echo $contact; ?></p>
               <p>Email:  <?php echo $email; ?></p>
+=======
+              <img src="<?php echo 'data:image/jpeg;base64,'.base64_encode( $image ); ; ?>" width="200" class= "details img-responsive">
+            </div>
+            <div class="col-sm-12">
+            <h4><?php echo $firstname." ". $lastname?></h4>
+             <h5><?php echo $type?></h5>
+            <p><?php echo $description; ?></p>
+              <hr>
+               <p>Phone number: 0<?php echo $phone; ?></p>
+              <p>Email:  <?php echo $email; ?></p>
+              <p>Location:  <?php echo $constituency.", ".$ward; ?></p>
+>>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
              </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<<<<<<< HEAD
         <a href="book.php?userID=<?php echo $userID?>" ><button type="button" class="btn btn-primary" >Book</button></a>
       </div>
     </div>
@@ -354,6 +488,218 @@ if(isset($_POST['update'])){
 
              
             </div>
+=======
+        <a href="<?php echo base_url('bk/booking_view'); ?> " ><button type="button" class="btn btn-primary" >Book</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+               <!-- <div class="grid-item branding  col-sm-12 col-md-6 col-lg-3">
+                    <a href="../assets/img/fashion 1.jpeg" title="project name 1" >
+                        <div class="project_box_one">
+                            <img src="../assets/img/Photographer 1.jpeg"  />
+                            <div class="product_info">
+                                <div class="product_info_text">
+                                    <div class="product_info_text_inner">
+                                        <i class="ion ion-plus"></i>
+                                        <h4>My projects</h4>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </a>
+
+
+
+                    <div class="book">
+                      <a href='book.php' name="submit" value="Book" class="btn btn-primary"> Book Me</button></a>
+                    </div>
+
+                    <div class="row">
+<div class="col-sm-12">
+<form id="ratingForm" method="POST">
+<div class="form-group">
+<h4>Rate Me</h4>
+<button type="button" class="btn btn-warning btn-sm rateButton" aria-label="Left Align">
+<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default btn-grey btn-sm rateButton" aria-label="Left Align">
+<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default btn-grey btn-sm rateButton" aria-label="Left Align">
+<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default btn-grey btn-sm rateButton" aria-label="Left Align">
+<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default btn-grey btn-sm rateButton" aria-label="Left Align">
+<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+</button>
+<input type="hidden" class="form-control" id="rating" name="rating" value="1">
+<input type="hidden" class="form-control" id="itemId" name="itemId" value="12345678">
+</div>
+
+<div class="form-group">
+<label for="comment">Comment*</label>
+<textarea class="form-control" rows="5" id="comment" name="comment" required></textarea>
+</div>
+<div class="form-group">
+<button type="submit" class="btn btn-info" id="saveReview">Save Review</button> <button type="button" class="btn btn-info" id="cancelReview">Cancel</button>
+</div>
+</form>
+</div>
+</div>
+
+                </div>
+
+                <div class="grid-item  branding architecture  col-md-6 col-lg-3">
+                    <a href="../assets/img/portfolio/photographer 2.jpeg" title="project name 2">
+                        <div class="project_box_one">
+                            <img src="../assets/img/photographer 2.jpeg"  />
+                            <div class="product_info">
+                                <div class="product_info_text">
+                                    <div class="product_info_text_inner">
+                                        <i class="ion ion-plus"></i>
+                                        <h4>project name</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="book">
+                      <button type="Submit" name="submit" value="Book" class="btn btn-primary"> Book Me </button>
+                    </div>
+
+                </div>
+
+                <div class="grid-item  design col-sm-12 col-md-6 col-lg-3">
+                    <a href="../assets/img/portfolio/photographer 3.jpeg" title="project name 5">
+                        <div class="project_box_one">
+                            <img src="../assets/img/photographer 3.jpeg"  />
+                            <div class="product_info">
+                                <div class="product_info_text">
+                                    <div class="product_info_text_inner">
+                                        <i class="ion ion-plus"></i>
+                                        <h4>project name</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="book">
+                      <button type="Submit" name="" value="Book" class="btn btn-primary"> Book Me</button>
+                    </div>
+
+                </div>
+                <div class="grid-item  photography design col-sm-12 col-md-6 col-lg-3">
+                    <a href="../assets/img/portfolio/photographer 4.jpeg" title="project name 5">
+                        <div class="project_box_one">
+                            <img src="../assets/img/photographer 4.jpeg"  />
+                            <div class="product_info">
+                                <div class="product_info_text">
+                                    <div class="product_info_text_inner">
+                                        <i class="ion ion-plus"></i>
+                                        <h4>project name</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="book">
+                      <button type="Submit" name="" value="Book" class="btn btn-primary"> Book Me</button>
+                    </div>
+
+                </div>
+                <div class="grid-item  branding photography  col-sm-12 col-md-6 col-lg-3">
+                    <a href="../assets/img/portfolio/port5.png" title="project name 5">
+                        <div class="project_box_one">
+                            <img src="../assets/img/photographer 5.jpeg"  />
+                            <div class="product_info">
+                                <div class="product_info_text">
+                                    <div class="product_info_text_inner">
+                                        <i class="ion ion-plus"></i>
+                                        <h4>project name</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="book">
+                      <button type="Submit" name="" value="Book" class="btn btn-primary"> Book Me</button>
+                    </div>
+
+                </div>
+                <div class="grid-item   architecture design col-sm-12 col-md-6 col-lg-3">
+                    <a href="../assets/img/portfolio/port6.png" title="project name 5">
+                        <div class="project_box_one">
+                            <img src="../assets/img/photographer 6.jpeg"  />
+                            <div class="product_info">
+                                <div class="product_info_text">
+                                    <div class="product_info_text_inner">
+                                        <i class="ion ion-plus"></i>
+                                        <h4>project name</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="book">
+                      <button type="Submit" name="" value="Book" class="btn btn-primary"> Book Me</button>
+                    </div>
+
+                </div>
+                <div class="grid-item  photography architecture col-sm-12 col-md-6 col-lg-3">
+                    <a href="../assets/img/portfolio/port7.png" title="project name 5">
+                        <div class="project_box_one">
+                            <img src="../assets/img/photographer 7.jpeg"  />
+                            <div class="product_info">
+                                <div class="product_info_text">
+                                    <div class="product_info_text_inner">
+                                        <i class="ion ion-plus"></i>
+                                        <h4>project name</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="book">
+                      <button type="Submit" name="" value="Book" class="btn btn-primary"> Book Me</button>
+                    </div>
+
+                </div>
+                <div class="grid-item  branding design  col-sm-12 col-md-6 col-lg-3">
+                    <a href="../assets/img/portfolio/photographer 2.jpeg" title="project name 5">
+                        <div class="project_box_one">
+                            <img src="../assets/img/photographer 8.jpeg"  />
+                            <div class="product_info">
+                                <div class="product_info_text">
+                                    <div class="product_info_text_inner">
+                                        <i class="ion ion-plus"></i>
+                                        <h4>project name</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="book">
+                      <button type="Submit" name="" value="Book" class="btn btn-primary"> Book Me</button>
+                    </div>-->
+
+                </div>
+
+
+            </div> -->
+>>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
             <!--=================== filter portfolio end====================-->
         </div>
         <!--=================== content body end ====================-->
@@ -381,5 +727,8 @@ if(isset($_POST['update'])){
 <script src="../assets/js/wow.min.js"></script>
 <!-- Custom js -->
 <script src="../assets/js/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

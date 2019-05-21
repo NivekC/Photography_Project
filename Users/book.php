@@ -10,6 +10,7 @@ $Puserid = $_GET['userID'];
 
 
 $con = new DBConnector;
+<<<<<<< HEAD
     $username = $_SESSION['username'];
 
 $userDetails = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
@@ -23,6 +24,18 @@ while($row=mysqli_fetch_array($userDetails)){
     while($row=mysqli_fetch_array($sql1)){
       $Photoid = $row['photographersID'];
     }
+=======
+
+    //$username = $_SESSION['username'];
+  //   $sql1 = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
+  //
+  //
+  //   while($row=mysqli_fetch_array($sql1)){
+  // $username = $row['username'];
+  // $Userid = $row['UserID'];
+  //
+  //   }
+>>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
 
 if(isset($_POST['book'])){
 
@@ -270,7 +283,7 @@ if(isset($_POST['book'])){
      $venue = $_POST['venue'];
      $category = $_POST['category'];
      $sql2 = mysqli_query($con->conn, "UPDATE `booking` SET `date`='$date',`venue`='$venue',`category`='$category' WHERE username = '$username'");
-     
+
      $stmt->execute();
 
 

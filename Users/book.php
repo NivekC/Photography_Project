@@ -2,22 +2,50 @@
 
 session_start();
 include('../DB/db.php');
-
-if(isset($_POST['update'])){
-    header("Refresh:0");
+if(!isset($_SESSION['username']))
+{
+    header("location:../login/login.php");
 }
+$Puserid = $_GET['userID'];
+
 
 $con = new DBConnector;
     $username = $_SESSION['username'];
-    $sql1 = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
+
+$userDetails = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
+while($row=mysqli_fetch_array($userDetails)){
+    $ClientID = $row['UserID'];
+  }
+ $sql1 = mysqli_query($con->conn, "SELECT * FROM `photographers` WHERE UserID = '$Puserid'");
+
 
 
     while($row=mysqli_fetch_array($sql1)){
-  $username = $row['username'];
-  $Userid = $row['UserID'];
-
+      $Photoid = $row['photographersID'];
     }
 
+if(isset($_POST['book'])){
+
+    $date = $_POST['date'];
+    $venue = $_POST['venue'];
+    $category = $_POST['category'];
+
+    $booking = "INSERT INTO `booking`(`date`, `venue`, `category`, `photographerID`, `UserID`) VALUES ('$date','$venue','$category','$Photoid','$Puserid')";
+    echo $booking;
+    $sqlBook = mysqli_query($con->conn, "INSERT INTO `booking`(`date`, `venue`, `category`, `photographerID`, `UserID`) VALUES ('$date','$venue','$category','$Photoid','$ClientID')") or die("Error!".mysqli_error($con->conn));
+    if($sqlBook)
+    {
+        header("location: index.php");
+    }
+    else
+    {
+                echo '<script language="javascript">';
+                echo 'alert("Please Check your inputs once more")';
+                echo '</script>';
+    }
+}
+ 
+   
 
  ?>
 
@@ -169,15 +197,11 @@ $con = new DBConnector;
  					</span>
 
 
-          <div class="wrap-input100 validate-input" data-validate="Username is required">
- 						<span class="label-input100">Username</span>
- 						<input class="input100" type="text" name="username"  readonly value="<?php echo $username ?>">
- 						<span class="focus-input100"></span>
- 					</div>
+          
 
-          <div class="wrap-input100 validate-input" data-validate="Username is required">
+          <div class="wrap-input100 validate-input" data-validate="Date is required">
  						<span class="label-input100">Date</span>
- 						<input class="input100" type="text" name="date"  >
+ 						<input class="input100" type="date" name="date"  >
  						<span class="focus-input100"></span>
  					</div>
 
@@ -187,7 +211,7 @@ $con = new DBConnector;
  						<span class="focus-input100"></span>
  					</div>
 
-          <div class="wrap-input100 validate-input" data-validate="Username is required">
+          <div class="wrap-input100 validate-input" data-validate="Category is required">
  						<span class="label-input100">Category</span>
  						<input class="input100" type="text" name="category"  >
  						<span class="focus-input100"></span>

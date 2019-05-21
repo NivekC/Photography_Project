@@ -18,7 +18,8 @@ include('../DB/db.php');
                    if($row['access_level'] == 1){
                     echo "Please proceed to the admin module";
                    } elseif($row['access_level'] == 2){
-                    echo "Please proceed to the user module";
+					echo "Please proceed to the user module";
+					header("location: ../users/index.php");
                    }
                    else{
                     header("location: ../photographers/index.php");

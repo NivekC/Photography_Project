@@ -1,5 +1,10 @@
 <?php
 session_start();
+include_once('../DB/db.php');
+if(!isset($_SESSION['username']))
+{
+    header("location:../login/login.php");
+}
 
 ?>
 <!DOCTYPE html>
@@ -85,6 +90,11 @@ session_start();
                     <li>
                         <a href="photographers.php">
                             Photographers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../authenticator/logout.php">
+                            logout
                         </a>
                     </li>
                 </ul>

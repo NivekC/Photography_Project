@@ -6,7 +6,7 @@ include('../DB/db.php');
 
 		if(isset($_POST['login']))
 		{
-		
+
 			$username = $_POST['username'];
 			$password = $_POST['pass'];
 
@@ -18,6 +18,7 @@ include('../DB/db.php');
                    if($row['access_level'] == 1){
                     echo "Please proceed to the admin module";
                    } elseif($row['access_level'] == 2){
+										 header("location: ../Users/index.php");
                     echo "Please proceed to the user module";
                    }
                    else{
@@ -26,11 +27,11 @@ include('../DB/db.php');
                    }
                 }
             }
-            
-            
-            
+
+
+
         }
-	   
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +39,7 @@ include('../DB/db.php');
 	<title>signup</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="loginAssets/images/icons/favicon.ico"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="loginAssets/vendor/bootstrap/css/bootstrap.min.css">
@@ -50,24 +51,24 @@ include('../DB/db.php');
 	<link rel="stylesheet" type="text/css" href="loginAssets/fonts/iconic/css/material-design-iconic-font.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="loginAssets/vendor/animate/animate.css">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="loginAssets/vendor/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="loginAssets/vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="loginAssets/vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="loginAssets/vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="loginAssets/css/util.css">
 	<link rel="stylesheet" type="text/css" href="loginAssets/css/main.css">
 <!--===============================================================================================-->
 </head>
-<body style="background-color: #999999;">
-	
+<!-- <body style="background-color: #999999;"> -->
+
 	<div class="limiter">
 		<div class="container-login100">
-		<div class="login100-more" style="background-image: url('loginAssets/images/bg-01.jpg');"></div>
+		<div class="login100-more" style="background-image: url('loginAssets/images/fashion1.jpeg');"></div>
 
 			<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
 				<form class="login100-form validate-form" action="#" method="POST">
@@ -99,7 +100,7 @@ include('../DB/db.php');
 							</label>
 						</div>
 
-						
+
 					</div>
 
 					<div class="container-login100-form-btn">
@@ -119,7 +120,7 @@ include('../DB/db.php');
 			</div>
 		</div>
 	</div>
-	
+
 <!--===============================================================================================-->
 	<script src="loginAssets/vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->

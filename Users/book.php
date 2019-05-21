@@ -8,15 +8,16 @@ if(isset($_POST['update'])){
 }
 
 $con = new DBConnector;
-    $username = $_SESSION['username'];
-    $sql1 = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
 
-
-    while($row=mysqli_fetch_array($sql1)){
-  $username = $row['username'];
-  $Userid = $row['UserID'];
-
-    }
+    //$username = $_SESSION['username'];
+  //   $sql1 = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
+  //
+  //
+  //   while($row=mysqli_fetch_array($sql1)){
+  // $username = $row['username'];
+  // $Userid = $row['UserID'];
+  //
+  //   }
 
 
  ?>
@@ -246,7 +247,7 @@ $con = new DBConnector;
      $venue = $_POST['venue'];
      $category = $_POST['category'];
      $sql2 = mysqli_query($con->conn, "UPDATE `booking` SET `date`='$date',`venue`='$venue',`category`='$category' WHERE username = '$username'");
-     
+
      $stmt->execute();
 
 

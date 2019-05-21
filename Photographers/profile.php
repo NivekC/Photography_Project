@@ -1,23 +1,19 @@
 <?php
 session_start();
 include('../DB/db.php');
-if(!isset($_SESSION['username']))
-{
-    header("location:../authenticator/login.php");
-}
 
 if(isset($_POST['update'])){
     header("Refresh:0");
 }
 
-		$con = new DBConnector;     
+		$con = new DBConnector;
         $username = $_SESSION['username'];
         $sql1 = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
-        
 
-        while($row=mysqli_fetch_array($sql1)){
-            $userID = $row['UserID'];
-            $fname = $row['fname'];
+
+      while($row=mysqli_fetch_array($sql1)){
+      $userID = $row['UserID'];
+      $fname = $row['fname'];
 			$lname = $row['lname'];
 			$email = $row['email'];
 			$username = $row['username'];
@@ -26,12 +22,12 @@ if(isset($_POST['update'])){
         }
         $sql = mysqli_query($con->conn, "SELECT * FROM `photographers` WHERE UserID = '$userID'");
         while($row=mysqli_fetch_array($sql)){
-           
+
 			$bio = $row['Description'];
 
         }
-        
-	   
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,8 +57,8 @@ if(isset($_POST['update'])){
     <link rel="stylesheet" href="../assets/css/animate.min.css">
     <!-- Custom styles for this template -->
     <link href="../assets/css/main.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../authenticator/loginAssets/css/main.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+    <link rel="stylesheet" type="text/css" href="../login/loginAssets/css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
@@ -86,17 +82,18 @@ if(isset($_POST['update'])){
                 </a>
             </div>
             <!--logo end-->
-<!--main menu -->
-<div class="side_menu_section">
+
+            <!--main menu -->
+            <div class="side_menu_section">
                 <ul class="menu_nav">
                     <li>
                         <a href="index.php">
-                            Gallery
+                            Home
                         </a>
                     </li>
-                    <li >
+                    <li>
                         <a href="about.php">
-                            About Me
+                            About Us
                         </a>
                     </li>
                     <li>
@@ -105,8 +102,8 @@ if(isset($_POST['update'])){
                         </a>
                     </li>
                     <li>
-                        <a href="booking.php">
-                            Bookings
+                        <a href="portfolio.php">
+                            Portfolio
                         </a>
                     </li>
                     <li class="active">
@@ -119,17 +116,22 @@ if(isset($_POST['update'])){
                             Contact
                         </a>
                     </li>
-                    <li>
-                        <a href="../authenticator/logout.php">
-                            logout
-                        </a>
-                    </li>
                 </ul>
             </div>
-            <!--main menu end -->            <!--filter menu -->
+            <!--main menu end -->
 
-
-            
+            <!--filter menu -->
+            <div class="side_menu_section">
+                <h4 class="side_title">filter by:</h4>
+                <ul  id="filtr-container"  class="filter_nav">
+                    <li  data-filter="*" class="active"><a href="javascript:void(0)" >all</a></li>
+                    <li data-filter=".branding"> <a href="javascript:void(0)">branding</a></li>
+                    <li data-filter=".design"><a href="javascript:void(0)">design</a></li>
+                    <li data-filter=".photography"><a href="javascript:void(0)">photography</a></li>
+                    <li data-filter=".architecture"><a href="javascript:void(0)">architecture</a></li>
+                </ul>
+            </div>
+            <!--filter menu end -->
 
 
             <!--social and copyright -->
@@ -162,7 +164,7 @@ if(isset($_POST['update'])){
         <!--=================== side menu end====================-->
 
         <!--=================== Update Profile ====================-->
-        
+
 
         <div class="col-lg-10 col-md-9 col-12 body_block  align-content-center">
         <div class="limiter">
@@ -202,9 +204,9 @@ if(isset($_POST['update'])){
                         </div>
                         <div class="form-group shadow-textarea">
                             <label for="exampleFormControlTextarea6">Enter your Bio</label>
-                            <textarea class="form-control z-depth-1"  name="bio" id="exampleFormControlTextarea6" rows="3" cols="70" placeholder="Write something here..."><?php echo $bio?></textarea>
+                            <textarea class="form-control z-depth-1"  name="bio" id="exampleFormControlTextarea6" rows="3" cols="70" placeholder="Write something here..."></textarea>
                         </div>
-			
+
 
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
@@ -219,7 +221,7 @@ if(isset($_POST['update'])){
 			</div>
 		</div>
 	</div>
-	
+
         </div>
         <!--=================== content body end ====================-->
     </div>
@@ -261,7 +263,6 @@ if(isset($_POST['update']))
     $stmt->bind_param("ss", $bio, $userID);
     $stmt->execute();
 
-    
+
 }
 ?>
-

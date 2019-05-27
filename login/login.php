@@ -2,42 +2,31 @@
 session_start();
 include('../DB/db.php');
 
-		$con = new DBConnector;
+$con = new DBConnector;
 
-		if(isset($_POST['login']))
-		{
-
-			$username = $_POST['username'];
-			$password = $_POST['pass'];
-
-			$_SESSION['username'] = $username;
-
-            $res = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
-            while($row=mysqli_fetch_array($res)){
-                if(password_verify($password,$row['password']) && $username == $row['username']){
-                   if($row['access_level'] == 1){
-                    echo "Please proceed to the admin module";
-                   } elseif($row['access_level'] == 2){
-<<<<<<< HEAD
-					   //echo "kjfkalsjdfklasdjfalskd";
-					header("location: ../users/index.php");
-                    //echo "Please proceed to the user module";
-=======
-										 header("location: ../Users/index.php");
-                    echo "Please proceed to the user module";
->>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
-                   }
-                   else{
-                    header("location: ../photographers/index.php");
-                    echo "Please proceed to the photographers module";
-                   }
-                }
+if(isset($_POST['login'])){
+	$username = $_POST['username'];
+	$password = $_POST['pass'];
+	$_SESSION['username'] = $username;
+	$res = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
+    while($row=mysqli_fetch_array($res)){
+        if(password_verify($password,$row['password']) && $username == $row['username']){
+			if($row['active'] == 0){
+				echo "Account has been suspended due to violation on policy!";
+			} else{
+            if($row['access_level'] == 1){
+				echo "Please proceed to the admin module";
+				header("location:../admin/home.php");
+				exit();
+			} else if ($row['access_level'] == 2){
+				header("location: ../users/index.php");
+			} else {
+                header("location: ../photographers/index.php");
+                echo "Please proceed to the photographers module";
             }
-
-
-
-        }
-
+        }}
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -71,49 +60,29 @@ include('../DB/db.php');
 <!--===============================================================================================-->
 </head>
 <!-- <body style="background-color: #999999;"> -->
-
 	<div class="limiter">
 		<div class="container-login100">
-		<div class="login100-more" style="background-image: url('loginAssets/images/fashion1.jpeg');"></div>
-
-			<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
+			<div class="login100-more" style="background-image: url('loginAssets/images/fashion1.jpeg');"></div>
+				<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
 				<form class="login100-form validate-form" action="#" method="POST">
 					<span class="login100-form-title p-b-59">
-						Sign Up
+						Sign In
 					</span>
-
 					<div class="wrap-input100 validate-input" data-validate="Username is required">
 						<span class="label-input100">Username</span>
-						<input class="input100" type="text" name="username" placeholder="Username...">
+						<input class="input100" type="text" name="username" placeholder="Username..." autocomplete="off">
 						<span class="focus-input100"></span>
 					</div>
-
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
 						<span class="label-input100">Password</span>
-						<input class="input100" type="password" name="pass" placeholder="*************">
+						<input class="input100" type="password" name="pass" placeholder="*************" autocomplete="off">
 						<span class="focus-input100"></span>
 					</div>
-					<div class="flex-m w-full p-b-33">
-						<div class="contact100-form-checkbox">
-							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-							<label class="label-checkbox100" for="ckb1">
-								<span class="txt1">
-									I agree to the
-									<a href="#" class="txt2 hov1">
-										Terms of User
-									</a>
-								</span>
-							</label>
-						</div>
-
-
-					</div>
-
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button class="login100-form-btn" name="login">
-								login
+								Login
 							</button>
 						</div>
 

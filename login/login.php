@@ -18,14 +18,9 @@ include('../DB/db.php');
                    if($row['access_level'] == 1){
                     echo "Please proceed to the admin module";
                    } elseif($row['access_level'] == 2){
-<<<<<<< HEAD
 					   //echo "kjfkalsjdfklasdjfalskd";
 					header("location: ../users/index.php");
                     //echo "Please proceed to the user module";
-=======
-										 header("location: ../Users/index.php");
-                    echo "Please proceed to the user module";
->>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
                    }
                    else{
                     header("location: ../photographers/index.php");

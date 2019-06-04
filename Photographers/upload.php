@@ -9,16 +9,8 @@ if(!isset($_SESSION['username']))
 $con = new DBConnector;
 if(isset($_POST['submit']))
 {
-    //$file_name = $_FILES['fileToUpload']['name'];
-    //$file_size = $_FILES['fileToUpload']['size'];
-    //$file_tmp = $_FILES['fileToUpload']['tmp_name'];
-    //$file_type = $_FILES['fileToUpload']['type'];
 
-    
-
-    //echo $file_name;
-    // Set Upload Path
-    $target_dir = 'upload/';
+    $target_dir = '../assets/upload/';
     $category = $_POST['category'];
     $uname = $_SESSION['username'];
 

@@ -15,7 +15,7 @@ if($res->num_rows > 0)
       $pId = $row['photographersID'];           
     }
 }
-$ssql = "SELECT photographs FROM `gallery` WHERE photographersID = 1;";
+$ssql = "SELECT photographs FROM `gallery` WHERE photographersID = $pId;";
 $sql = mysqli_query($con->conn,$ssql);
 
 ?>
@@ -180,12 +180,11 @@ $sql = mysqli_query($con->conn,$ssql);
                      
                             <!-- Modal -->
                             <div id="id01" class="modal" >
-  
-                            <form class="modal-content animate md-form" action="upload.php" method="POST" enctype="multipart/form-data">
-                                <div class="imgcontainer">
-                                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                                <h1>Add Photographs</h1>
-                                </div>
+                                <form class="modal-content animate md-form" action="upload.php" method="POST" enctype="multipart/form-data">
+                                    <div class="imgcontainer">
+                                        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                        <h1>Add Photographs</h1>
+                                    </div>
 
                                 <div class="container">
                                     <label for="uname"><b>Category</b></label>
@@ -193,16 +192,16 @@ $sql = mysqli_query($con->conn,$ssql);
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                        </div>
-                                        <div class="custom-file">
+                                    </div>
+                                    <div class="custom-file">
                                             <input type="file" class="custom-file-input" name="fileToUpload[]" id="inputGroupFile01"
                                             aria-describedby="inputGroupFileAddon01" multiple >
                                             <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                                        </div>
-                                        </div>
+                                    </div>
+                                </div>
                                    
                                 <button class="btn btn-primary" name="submit"  style="text-align: center;width: auto;padding: 10px 18px; " type="submit">Save</button>
-                                </div>
+                            </div>
                             
                                 <div class="container" style="background-color:#f1f1f1">
                                 <button class="btn btn-danger" style=" width: auto;padding: 10px 18px;" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
@@ -217,7 +216,7 @@ $sql = mysqli_query($con->conn,$ssql);
             {
                 while($row = $sql->fetch_assoc()) {
                 $images = $row['photographs'];
-                echo "<img src='$images'  alt='pro1'  width='300px;' height='300px;' style='margin: 5px;'/> ";
+                echo "<img src='../assets/$images'  alt='pro1'  width='300px;' height='300px;' style='margin: 5px;'/> ";
                 echo "  ";        
                 }
             }

@@ -5,8 +5,46 @@ if(!isset($_SESSION['username']))
 {
     header("location:../login/login.php");
 }
+$con = new DBConnector;
 
+$uname = $_SESSION['username'];
+$res =  mysqli_query($con->conn, "SELECT photographers.photographersID FROM `photographers` JOIN users ON users.UserID = photographers.UserID WHERE users.username = '$uname'");
+if($res->num_rows > 0)
+{
+    while($row = $res->fetch_assoc()) {
+      $pId = $row['photographersID'];           
+    }
+}
+
+
+        $username = $_SESSION['username'];
+        $sqls = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
+        while($row=mysqli_fetch_array($sqls)){
+            $lesuserID = $row['UserID'];
+            
+
+        }
+        $dates = date("Y/m/d");
+        $resBooking =  mysqli_query($con->conn, "SELECT * FROM `booking` WHERE UserID = '$lesuserID' and notification = 1") or die("Error!: ".mysqli_error($con->conn));
+        
+        
+        $not=0;
+        if($resBooking->num_rows > 0)
+        {
+            while($row = $resBooking->fetch_assoc()) {
+                $bookID = $row['bookID'];
+                $photographerID = $row['photographerID'];
+                $Bdate = $row['date']; 
+                $notifyValue = $row['notification'];   
+              if($Bdate<$dates)
+                {
+                    $not++;
+                }    
+            }
+        }
+        
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,6 +73,36 @@ if(!isset($_SESSION['username']))
     <link rel="stylesheet" href="../assets/css/animate.min.css">
     <!-- Custom styles for this template -->
     <link href="../assets/css/main.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+         .notification {
+  background-color: grey;
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification:hover {
+  background: red;
+}
+
+.notification .badge {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
+    </style>
 </head>
 <body>
 <div class="loader">
@@ -66,15 +134,9 @@ if(!isset($_SESSION['username']))
                             Gallery
                         </a>
                     </li>
-                  
                     <li>
-                        <a href="services.php">
-                            Services
-                        </a>
-                    </li>
-                    <li>
-                        <a href="portfolio.php">
-                            Bookings
+                        <a href="photographers.php">
+                            Photographers
                         </a>
                     </li>
                     <li>
@@ -84,12 +146,13 @@ if(!isset($_SESSION['username']))
                     </li>
                     <li>
                         <a href="contact.php">
-                            Photos
+                            contact
                         </a>
                     </li>
                     <li>
-                        <a href="photographers.php">
-                            Photographers
+                        <a class="notification" class="active"  href="rating.php">
+                            <span>Ratings</span>
+                            <span class="badge"><?php if(isset($not)){if($not>=1&&$notifyValue==1){echo $not;}} ?></span>
                         </a>
                     </li>
                     <li>
@@ -109,7 +172,7 @@ if(!isset($_SESSION['username']))
                     <li data-filter=".branding"> <a href="javascript:void(0)">branding</a></li>
                     <li data-filter=".design"><a href="javascript:void(0)">design</a></li>
                     <li data-filter=".photography"><a href="javascript:void(0)">photography</a></li>
-                    <li data-filter=".architecture"><a href="javascript:void(0)">Wedding</a></li>
+                    <li data-filter=".Event"><a href="javascript:void(0)">Event</a></li>
                 </ul>
             </div>
             <!--filter menu end -->
@@ -137,152 +200,45 @@ if(!isset($_SESSION['username']))
             <!--social and copyright end -->
 
         </div>
+        
         <!--=================== side menu end====================-->
 
         <!--=================== content body ====================-->
         <div class="col-lg-10 col-md-9 col-12 body_block  align-content-center">
             <div class="portfolio">
                 <div class="container-fluid">
-                    <!--=================== masaonry portfolio start====================-->
-                    <div class="grid img-container justify-content-center no-gutters">
-                        <div class="grid-sizer col-sm-12 col-md-6 col-lg-3"></div>
-                        <div class="grid-item branding  col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/image1.jpg" title="project name 1">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/image1.jpg" alt="" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
+                    <div class="container">
+                        <div class="row">
+                            <div class='card-columns'">
+                                <?php 
+                                $ssql = "SELECT PhotographID,photographs,Category,PhotographersID FROM `gallery` ORDER BY RAND() LIMIT 30;";
+                                $sql = mysqli_query($con->conn,$ssql);
+                                    if($sql->num_rows > 0)
+                                    {
+                                        while($row = $sql->fetch_assoc()) {
+                                        $category = $row['Category'];
+                                        $images = $row['photographs'];
+                                        $photoID = $row['PhotographersID'];
+                                        $photosID = $row['PhotographID'];
+                                        echo "
+                                        <div class='col-md-12'>
+                                            <div class='card' style='width:20rem; '>
+                                                <img src='../assets/$images' class='card-img-top'  alt='pro1' width='100%' height='300px' style='padding:10px;' ' />
+                                                    <div class='card-body'>
+                                                        <a href='reporting.php?photographersID=".$photoID."&photosID=".$photosID."'><i class='material-icons'>report</i></a>
+                                                    </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  branding architecture  col-sm-12 col-md-6">
-                            <a href="../assets/img/portfolio/home-port2.png" title="project name 2">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/amani_wed.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  design col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port3.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/boat.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  photography design col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port4.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/lady.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  branding photography  col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port5.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/mama.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item   architecture design col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port6.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/karurawed.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  photography architecture col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port7.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/wedding mama.jpeg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item  branding design  col-sm-12 col-md-6 col-lg-3">
-                            <a href="../assets/img/portfolio/home-port8.png" title="project name 5">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/town.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid-item architecture  col-sm-12 col-md-6 col-lg-6">
-                            <a href="../assets/img/portfolio/home-port9.png" title="project name 4">
-                                <div class="project_box_one">
-                                    <img src="../assets/img/wed2.jpg" alt="pro1" />
-                                    <div class="product_info">
-                                        <div class="product_info_text">
-                                            <div class="product_info_text_inner">
-                                                <i class="ion ion-plus"></i>
-                                                <h4>project name</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                                        
+                                        ";
+                                            
+                                        }
+                                    }
+                                    
+                                ?>
+                            </div>
                         </div>
                     </div>
-                    <!--=================== masaonry portfolio end====================-->
                 </div>
             </div>
         </div>

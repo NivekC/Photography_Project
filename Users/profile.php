@@ -20,13 +20,31 @@ if(isset($_POST['update'])){
 			$contact = $row['contact'];
 
         }
-        $sql = mysqli_query($con->conn, "SELECT * FROM `users` WHERE UserID = '$userID'");
-        while($row=mysqli_fetch_array($sql)){
-
-			$bio = $row['Description'];
+       
+        $username = $_SESSION['username'];
+        $sqls = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
+        while($row=mysqli_fetch_array($sqls)){
+            $lesuserID = $row['UserID'];
 
         }
-
+        $dates = date("Y/m/d");
+        $resBooking =  mysqli_query($con->conn, "SELECT * FROM `booking` WHERE UserID = '$lesuserID' and notification = 1") or die("Error!: ".mysqli_error($con->conn));
+        
+        
+        $not=0;
+        if($resBooking->num_rows > 0)
+        {
+            while($row = $resBooking->fetch_assoc()) {
+                $bookID = $row['bookID'];
+                $photographerID = $row['photographerID'];
+                $Bdate = $row['date']; 
+                $notifyValue = $row['notification'];   
+              if($Bdate<$dates)
+                {
+                    $not++;
+                }    
+            }
+        }
 
 ?>
 <!DOCTYPE html>
@@ -60,6 +78,31 @@ if(isset($_POST['update'])){
     <link rel="stylesheet" type="text/css" href="../login/loginAssets/css/main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+         .notification {
+  background-color: grey;
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification:hover {
+  background: red;
+}
+
+.notification .badge {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
+    </style>
 </head>
 <body>
 <div class="loader">
@@ -83,23 +126,17 @@ if(isset($_POST['update'])){
             </div>
             <!--logo end-->
 
-            <!--main menu -->
-            <div class="side_menu_section">
+             <!--main menu -->
+             <div class="side_menu_section">
                 <ul class="menu_nav">
                     <li>
                         <a href="index.php">
-                            Home
-                        </a>
-                    </li>
-                  
-                    <li>
-                        <a href="services.php">
-                            Services
+                            Gallery
                         </a>
                     </li>
                     <li>
-                        <a href="portfolio.php">
-                            Portfolio
+                        <a href="photographers.php">
+                            Photographers
                         </a>
                     </li>
                     <li class="active">
@@ -109,7 +146,18 @@ if(isset($_POST['update'])){
                     </li>
                     <li>
                         <a href="contact.php">
-                            Contact
+                            contact
+                        </a>
+                    </li>
+                    <li>
+                        <a class="notification" class="active"  href="rating.php">
+                            <span>Ratings</span>
+                            <span class="badge"><?php if(isset($not)){if($not>=1&&$notifyValue==1){echo $not;}} ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../authenticator/logout.php">
+                            logout
                         </a>
                     </li>
                 </ul>
@@ -182,13 +230,10 @@ if(isset($_POST['update'])){
 					</div>
 					<div class="wrap-input100 validate-input" data-validate="Contact is required">
 							<span class="label-input100">Contact</span>
-							<input class="input100" type="text" name="contact" value="<?php echo $contact ?>">
+							<input class="input100" type="text" name="contact" value="0<?php echo $contact ?>">
 							<span class="focus-input100"></span>
                         </div>
-                        <div class="form-group shadow-textarea">
-                            <label for="exampleFormControlTextarea6">Enter your Bio</label>
-                            <textarea class="form-control z-depth-1"  name="bio" id="exampleFormControlTextarea6" rows="3" cols="70" placeholder="Write something here..."></textarea>
-                        </div>
+                       
 
 
 					<div class="container-login100-form-btn">

@@ -2,29 +2,36 @@
 session_start();
 include('../DB/db.php');
 
-$con = new DBConnector;
+		$con = new DBConnector;
 
-if(isset($_POST['login'])){
-	$username = $_POST['username'];
-	$password = $_POST['pass'];
+		if(isset($_POST['login']))
+		{
+		
+			$username = $_POST['username'];
+			$password = $_POST['pass'];
 
-	$_SESSION['username'] = $username;
+			$_SESSION['username'] = $username;
 
-	$res = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
-	while($row=mysqli_fetch_array($res)){
-		if(password_verify($password,$row['password']) && $username == $row['username']){
-			if($row['access_level'] == 1){
-				echo "Please proceed to the admin module";
-			} else if ($row['access_level'] == 2){
-				echo "Please proceed to the user module";
-				header("location: ../users/index.php");
-            } else {
-                header("location: ../photographers/index.php");
-                echo "Please proceed to the photographers module";
+            $res = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
+            while($row=mysqli_fetch_array($res)){
+                if(password_verify($password,$row['password']) && $username == $row['username']){
+                   if($row['access_level'] == 1){
+                    echo "Please proceed to the admin module";
+                   } elseif($row['access_level'] == 2){
+					echo "Please proceed to the user module";
+					header("location: ../users/index.php");
+                   }
+                   else{
+                    header("location: ../photographers/index.php");
+                    echo "Please proceed to the photographers module";
+                   }
+                }
             }
+            
+            
+            
         }
-    }
-}  
+	   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,7 +107,7 @@ if(isset($_POST['login'])){
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button class="login100-form-btn" name="login">
-								Login
+								login
 							</button>
 						</div>
 

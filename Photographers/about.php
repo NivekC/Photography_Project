@@ -18,9 +18,11 @@ if(!isset($_SESSION['username']))
         $sql = mysqli_query($con->conn, "SELECT * FROM `photographers` WHERE UserID = '$userID'");
         while($row=mysqli_fetch_array($sql)){
            
+            $photographerID = $row['photographersID'];
 			$bio = $row['Description'];
 
         }
+        $sqlRating = mysqli_query($con->conn, "SELECT * FROM `rating` WHERE UserID = '$userID'");
         $bo = "";
         
 ?>

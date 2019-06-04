@@ -10,7 +10,6 @@ $Puserid = $_GET['userID'];
 
 
 $con = new DBConnector;
-<<<<<<< HEAD
     $username = $_SESSION['username'];
 
 $userDetails = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
@@ -24,18 +23,6 @@ while($row=mysqli_fetch_array($userDetails)){
     while($row=mysqli_fetch_array($sql1)){
       $Photoid = $row['photographersID'];
     }
-=======
-
-    //$username = $_SESSION['username'];
-  //   $sql1 = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
-  //
-  //
-  //   while($row=mysqli_fetch_array($sql1)){
-  // $username = $row['username'];
-  // $Userid = $row['UserID'];
-  //
-  //   }
->>>>>>> a211ddf4f0903caba0672814bc52a983cded077a
 
 if(isset($_POST['book'])){
 
@@ -57,8 +44,31 @@ if(isset($_POST['book'])){
                 echo '</script>';
     }
 }
- 
-   
+        $username = $_SESSION['username'];
+        $sqls = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
+        while($row=mysqli_fetch_array($sqls)){
+            $lesuserID = $row['UserID'];
+
+        }
+        $dates = date("Y/m/d");
+        $resBooking =  mysqli_query($con->conn, "SELECT * FROM `booking` WHERE UserID = '$lesuserID' and notification = 1") or die("Error!: ".mysqli_error($con->conn));
+        
+        
+        $not=0;
+        if($resBooking->num_rows > 0)
+        {
+            while($row = $resBooking->fetch_assoc()) {
+                $bookID = $row['bookID'];
+                $photographerID = $row['photographerID'];
+                $Bdate = $row['date']; 
+                $notifyValue = $row['notification'];   
+              if($Bdate<$dates)
+                {
+                    $not++;
+                }    
+            }
+        }
+  
 
  ?>
 
@@ -94,6 +104,31 @@ if(isset($_POST['book'])){
      <link rel="stylesheet" type="text/css" href="../login/loginAssets/css/main.css">
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <style>
+         .notification {
+  background-color: grey;
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification:hover {
+  background: red;
+}
+
+.notification .badge {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
+     </style>
  </head>
  <body>
  <div class="loader">
@@ -117,42 +152,43 @@ if(isset($_POST['book'])){
              </div>
              <!--logo end-->
 
-             <!--main menu -->
-             <div class="side_menu_section">
-                 <ul class="menu_nav">
-                     <li>
-                         <a href="index.php">
-                             Home
-                         </a>
-                     </li>
-                     <li>
-                         <a href="about.php">
-                             About Us
-                         </a>
-                     </li>
-                     <li>
-                         <a href="services.php">
-                             Services
-                         </a>
-                     </li>
-                     <li>
-                         <a href="portfolio.php">
-                             Portfolio
-                         </a>
-                     </li>
-                     <li class="active">
-                         <a href="profile.php">
-                             Profile
-                         </a>
-                     </li>
-                     <li>
-                         <a href="contact.php">
-                             Contact
-                         </a>
-                     </li>
-                 </ul>
-             </div>
-             <!--main menu end -->
+              <!--main menu -->
+            <div class="side_menu_section">
+                <ul class="menu_nav">
+                    <li>
+                        <a href="index.php">
+                            Gallery
+                        </a>
+                    </li>
+                    <li >
+                        <a href="photographers.php">
+                            Photographers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.php">
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contact.php">
+                            contact
+                        </a>
+                    </li>
+                    <li>
+                        <a class="notification" class="active"  href="rating.php">
+                            <span>Ratings</span>
+                            <span class="badge"><?php if(isset($not)){if($not>=1&&$notifyValue==1){echo $not;}} ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../authenticator/logout.php">
+                            logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!--main menu end -->
 
              <!--filter menu -->
              <div class="side_menu_section">
@@ -214,7 +250,7 @@ if(isset($_POST['book'])){
 
           <div class="wrap-input100 validate-input" data-validate="Date is required">
  						<span class="label-input100">Date</span>
- 						<input class="input100" type="date" name="date"  >
+ 						<input class="input100" type="date" name="date" min="2019-05-29" >
  						<span class="focus-input100"></span>
  					</div>
 
@@ -283,7 +319,7 @@ if(isset($_POST['book'])){
      $venue = $_POST['venue'];
      $category = $_POST['category'];
      $sql2 = mysqli_query($con->conn, "UPDATE `booking` SET `date`='$date',`venue`='$venue',`category`='$category' WHERE username = '$username'");
-
+     
      $stmt->execute();
 
 

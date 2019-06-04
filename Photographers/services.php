@@ -18,12 +18,15 @@ if($res->num_rows > 0)
 if(isset($_POST['submit'])){
     $category = $_POST['category'];
     $description = $_POST['description'];
+    $minCash = $_POST['minCash'];
+    $maxCash = $_POST['maxCash'];
 
   
-
+    echo $minCash;
+    echo $maxCash;
     
 
-        $ssql = "INSERT INTO `services`(`category`, `description`, `photographerID`) VALUES ('$category','$description','$pId')";
+        $ssql = "INSERT INTO `services`(`category`, `description`, `photographerID`,`minCash`,`maxCash` VALUES ('$category','$description','$pId','$minCash','$maxCash')";
         echo $ssql;
         $sql = mysqli_query($con->conn,$ssql);
         if($sql === true){
@@ -68,7 +71,7 @@ if(isset($_POST['submit'])){
     <link href="../assets/css/main.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../folderB/modal.css">
+    <link rel="stylesheet" href="../assets/modal/modal.css">
     <style>
         #mdlbtn{
             height: 300px; 
@@ -218,16 +221,23 @@ if(isset($_POST['submit'])){
                                                         <input type="text" placeholder="Enter category" name="category" required>
                                                   
                                                         <div class="form-group shadow-textarea">
-                                                          <label for="exampleFormControlTextarea6">Enter the description of the service</label>
+                                                          <label for="exampleFormControlTextarea6"><b> Enter the description of the service</b></label>
                                                           <textarea class="form-control z-depth-1" name="description" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
                                                         </div>
+                                                        <label for="price"><b>State the price range for the service</b></label>
+                                                        <div class="col-lg-6">
+                                                            <input type="text"name="minCash"  placeholder="Min Cash in KSH" class="form-control">
+                                                        </div>
+                                                        <div class="col-lg-6 ">
+                                                            <input type="text" name="maxCash" placeholder="Max Cash in KSH" class="form-control">
+                                                        </div>
                                                           
-                                                        <button class="btn btn-primary" name="submit"  style="text-align: center;width: auto;padding: 10px 18px; " type="submit">Save</button>
+                                                        
                                                       </div>
                                                   
                                                       <div class="container" style="background-color:#f1f1f1">
-                                                        <button class="btn btn-danger" style=" width: auto;padding: 10px 18px;" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-                                                        
+                                                        <button class="btn btn-sm btn-danger" style=" width: auto;padding: 10px 18px;" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                                                        <button class="btn btn-primary" name="submit"  style="text-align: center;float:right;width: auto;padding: 10px 18px; " type="submit">Save</button>
                                                       </div>
                                                     </form>
                                                   </div>

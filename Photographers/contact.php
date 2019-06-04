@@ -1,9 +1,84 @@
 <?php
-    session_start();
-    if(!isset($_SESSION['username']))
-    {
-        header("location:../authenticator/login.php");
-    }
+session_start();
+// Import PHPMailer classes into the global namespace
+// These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+include_once('../DB/db.php');
+
+if(!isset($_SESSION['username']))
+{
+    header("location:../authenticator/login.php");
+}
+
+            //photographers details
+            $con = new DBConnector;     
+            $username = $_SESSION['username'];
+            $sqlAdmin = mysqli_query($con->conn, "SELECT * FROM `users` WHERE access_level = 1");
+            while($row=mysqli_fetch_array($sqlAdmin)){
+                $adminEmail = $row['email'];
+                }
+            $sqlUser = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
+            while($row=mysqli_fetch_array($sqlUser)){
+                $UserEmail = $row['email'];
+                $fname = $row['fname'];
+                $lname = $row['lname'];
+                }
+        //Get details from the form
+        if(isset($_POST['submit'])){           
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $subject = $_POST['subject'];
+            $body = $_POST['body'];
+
+
+
+//Load Composer's autoloader
+require '../assets/vendor/autoload.php';
+
+$mail = new PHPMailer(true);                              // Passing `true` enables exceptions
+try {
+    //Server settings
+    //$mail->SMTPDebug = 3;                                 // Enable verbose debug output
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+    $mail->Username = 'kiplelisaac@gmail.com';                 // SMTP username
+    $mail->Password = 'Chepkurui1998';                           // SMTP password
+    $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = 587;
+    $mail->SMTPOptions = array('ssl' => array('verify_peer' => false,'verify_peer_name' => false,'allow_self_signed' => true
+)
+);                                    // TCP port to connect to
+
+
+    $message1 = $body . "<br>" . "<br>"."Name: ". $fname ." " .$lname . "<br>"."Please reply to this email. "."<br>" ."Thank You ". "<br>" . $UserEmail;
+ 
+ 
+
+    //Recipients
+    $mail->setFrom($email, $fname);
+    $mail->addAddress($email);     // Add a recipient
+
+    //Content
+    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->Subject = $subject;
+    $mail->Body    = $message1;
+    $mail->AltBody = $message1;
+
+    $mail->send();
+    header("location: index.php");
+    echo 'Message has been sent';
+    
+}
+catch (Exception $e) {
+    echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+
+}
+ }
+ 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,24 +249,25 @@
                                                 </div>
                                             </li>
                                         </ul>
-
+                                    <form action="contact.php" method="post">
                                         <div class="mt75 row justify-content-center">
                                             <div class="col-lg-6 col-12">
-                                                <input type="text" placeholder="Name" class="form-control">
+                                                <input type="text" placeholder="Name" name="name" class="form-control">
                                             </div>
                                             <div class="col-lg-6 col-12">
-                                                <input type="email" placeholder="E-Mail" class="form-control">
+                                                <input type="email" placeholder="E-Mail" name="email" value="<?php echo $adminEmail?>" class="form-control">
                                             </div>
                                             <div class="col-12">
-                                                <input type="text" placeholder="Subject" class="form-control">
+                                                <input type="text" placeholder="Subject" name="subject" class="form-control">
                                             </div>
                                             <div class="col-12">
-                                                <textarea  placeholder="Message" class="form-control" cols="4" rows="4"></textarea>
+                                                <textarea  placeholder="Message" name="body" class="form-control" cols="4" rows="4"></textarea>
                                             </div>
                                             <div class="col-12">
-                                                <button type="Submit" class="btn btn-primary">Send</button>
+                                                <button type="Submit" name="submit" class="btn btn-primary">Send</button>
                                             </div>
                                         </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

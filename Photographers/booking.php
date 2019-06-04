@@ -1,13 +1,46 @@
 <?php
-    session_start();
-    include_once('../DB/db.php');
-    if(!isset($_SESSION['username']))
+session_start();
+include('../DB/db.php');
+if(!isset($_SESSION['username']))
 {
     header("location:../authenticator/login.php");
 }
-    
 
+        $con = new DBConnector; 
+        $username = $_SESSION['username'];    
+        $sql = mysqli_query($con->conn, "SELECT photographers.photographersID,photographers.UserID FROM `photographers` JOIN users ON users.UserID = photographers.UserID WHERE users.username = '$username'");
+        while($row=mysqli_fetch_array($sql)){
+            $PhotographersID = $row['photographersID'];
+
+        }
+        $query = "SELECT * FROM `booking` WHERE photographerID = '$PhotographersID'";
+       
+        $sql1 = mysqli_query($con->conn, "SELECT * FROM `booking` WHERE photographerID = '$PhotographersID'") or die("Error! ".mysqli_error($con->conn));
+    
+        while($row=mysqli_fetch_array($sql1)){
+            $UserID = $row['UserID'];
+            $date = $row['date'];
+			$venue = $row['venue'];
+			$category = $row['category'];
+        }
+
+        if(isset($UserID)){
+        $res =  mysqli_query($con->conn, "SELECT * FROM `users` WHERE UserID =  '$UserID'");
+        if($res->num_rows > 0)
+        {
+            while($row = $res->fetch_assoc()) {
+                $fname = $row['fname'];
+                $lname = $row['lname'];
+                $email = $row['email'];
+                $username = $row['username'];
+                $contact = $row['contact'];           
+            }
+        }
+        }
+        
+  	   
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +69,119 @@
     <link rel="stylesheet" href="../assets/css/animate.min.css">
     <!-- Custom styles for this template -->
     <link href="../assets/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <style>
+    #content{
+        margin-top: 80px;
+      }/*
+      .crds{
+        margin-left:10px;
+        margin-right:10px;
+      }*/
+      .card-container {
+        /*display: grid;
+        padding: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-gap: 1rem;*/
+       /* margin-right:10px;*/
+    }
+.card {
+   /* position:absolute;*/
+   margin-top: 250px;
+    top:50%;
+    left:10%;
+    transform:translate(-50%,-50%);
+    width:300px;
+    min-height:400px;
+    background:#fff;
+    box-shadow:0 20px 50px rgba(0,0,0,.1);
+    border-radius:10px;
+    transition:0.5s;
+    float:right;
+    margin-right:50px;
+}
+.card:hover {
+    box-shadow:0 30px 70px rgba(0,0,0,.2);
+}
+.card .box {
+    position:absolute;
+    top:50%;
+    left:0;
+    transform:translateY(-50%);
+    text-align:center;
+    padding:20px;
+    box-sizing:border-box;
+    width:100%;
+}
+.card .box .img {
+    width:120px;
+    height:120px;
+    margin:0 auto;
+    border-radius:50%;
+    overflow:hidden;
+}
+.card .box .img img {
+    width:100%;
+    height:100%;
+}
+.card .box h2 {
+    font-size:20px;
+    color:#262626;
+    margin:20px auto;
+}
+.card .box h2 span {
+    font-size:14px;
+    background:#e91e63;
+    color:#fff;
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:15px;
+}
+.card .box p {
+    color:#262626;
+}
+.card .box span {
+    display:inline-flex;
+}
+.card .box ul {
+    margin:0;
+    padding:0;
+}
+.card .box ul li {
+    list-style:none;
+    float:left;
+}
+.card .box ul li a {
+    display:block;
+    color:#aaa;
+    margin:0 10px;
+    font-size:20px;
+    transition:0.5s;
+    text-align:center;
+}
+.card .box ul li:hover a {
+    color:#e91e63;
+    transform:rotateY(360deg);
+    }
+.container
+{
+    margin-top: -600px;
+    margin-left: 250px;
+    width: 1000px;
+    margin-bottom: 50px;
+}
+.img-fluid{
+        width: 1150px;
+        height: 600px;
+       /* border: 2px solid black;*/
+        border-radius: 5px;
+        padding: 8px;
+        margin-top: 20px;
+      }
+    
+    </style>
 </head>
 <body>
 <div class="loader">
@@ -61,48 +207,58 @@
 
             <!--main menu -->
             <div class="side_menu_section">
-                <ul class="menu_nav">
-                    <li>
-                        <a href="index.php">
-                            Gallery
-                        </a>
-                    </li>
-                    <li >
-                        <a href="about.php">
-                            About Me
-                        </a>
-                    </li>
-                    <li>
-                        <a href="services.php">
-                            Services
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a  href="booking.php">
-                            Bookings
-                        </a>
-                    </li>
-                    <li>
-                        <a href="profile.php">
-                            Profile
-                        </a>
-                    </li>
-                    <li>
-                        <a href="contact.php">
-                            Contact
-                        </a>
-                    </li>
-                    <li>
-                        <a href="../authenticator/logout.php">
-                            logout
-                        </a>
-                    </li>
+                    <ul class="menu_nav">
+                        <li>
+                            <a href="index.php">
+                                Gallery
+                            </a>
+                        </li>
+                        <li>
+                            <a href="about.php">
+                                About Me
+                            </a>
+                        </li>
+                        <li>
+                            <a href="services.php">
+                                Services
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="portfolio.php">
+                                Bookings
+                            </a>
+                        </li>
+                        <li>
+                            <a href="profile.php">
+                                Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="book.php">
+                                Photos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../authenticator/logout.php">
+                                logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!--main menu end -->
+
+            <!--filter menu -->
+            <div class="side_menu_section">
+                <h4 class="side_title">filter by:</h4>
+                <ul  id="filtr-container"  class="filter_nav">
+                    <li  data-filter="*" class="active"><a href="javascript:void(0)" >all</a></li>
+                    <li data-filter=".branding"> <a href="javascript:void(0)">branding</a></li>
+                    <li data-filter=".design"><a href="javascript:void(0)">design</a></li>
+                    <li data-filter=".photography"><a href="javascript:void(0)">photography</a></li>
+                    <li data-filter=".architecture"><a href="javascript:void(0)">architecture</a></li>
                 </ul>
             </div>
-            <!--main menu end -->            <!--filter menu -->
-
-
-            
+            <!--filter menu end -->
 
 
             <!--social and copyright -->
@@ -135,141 +291,72 @@
         <!--=================== side menu end====================-->
 
         <!--=================== content body ====================-->
-      <!--=================== content body ====================-->
-      <div class="col-lg-10 col-md-9 col-12 body_block  align-content-center">
-            <div class="blog">
-                <div class="row justify-content-center">
-                    <div class="col-lg-4 col-md-12 col-12">
-                        <div class="sidebar">
-                            <div class="widget widget_search">
-                                <div class="search-form">
-                                    <input type="text" class="search-field" placeholder="Search">
-                                </div>
-                            </div>
-                            <div class="widget widget_categories">
-                                <h4 class="widget-title">
-                                    Categories
-                                </h4>
-                                <ul>
-                                    <li><a href="#">Vestibulum maximus</a></li>
-                                    <li><a href="#">Nisi eu lobortis pharetra</a></li>
-                                    <li><a href="#">Orci quam accumsan </a></li>
-                                    <li><a href="#">Auguen pharetra massa</a></li>
-                                </ul>
-                            </div>
-                            <div class="widget widget_instagram">
-                                <h4 class="widget-title">
-                                    Instagram
-                                </h4>
-                                <ul>
-                                    <li><a href="#"><img src="../assets/img/blog/instagram/inst5.png" alt="instagram"></a></li>
-                                    <li><a href="#"><img src="../assets/img/blog/instagram/inst2.png" alt="instagram"></a></li>
-                                    <li><a href="#"><img src="../assets/img/blog/instagram/inst3.png" alt="instagram"></a></li>
-                                    <li><a href="#"><img src="../assets/img/blog/instagram/inst4.png" alt="instagram"></a></li>
-                                    <li><a href="#"><img src="../assets/img/blog/instagram/inst5.png" alt="instagram"></a></li>
-                                    <li><a href="#"><img src="../assets/img/blog/instagram/inst6.png" alt="instagram"></a></li>
-                                </ul>
-                            </div>
-                            <div class="widget widget_tags">
-                                <h4 class="widget-title">
-                                    Tags
-                                </h4>
-                                <ul>
-                                    <li><a href="#">branding</a></li>
-                                    <li><a href="#">identity</a></li>
-                                    <li><a href="#">design</a></li>
-                                    <li><a href="#">inspiration</a></li>
-                                    <li><a href="#">web design</a></li>
-                                    <li><a href="#">video</a></li>
-                                    <li><a href="#">photography</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-12 col-12">
-                        <article class="blog_card">
-                            <div class="blog_card_top">
-                                <img src="../assets/img/blog/blog1.png" alt="blog title " />
-                                <div class="blog_date">
-                                    31
-                                    <span>
-                                        october 2017
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="blog_card_bottom">
-                                <h4>
-                                    <a href="#">
-                                        A short blog post about design
-                                    </a>
-                                </h4>
-                                <div class="meta_data">
-                                    <span>By Loredana Papp-Dinea</span>
-                                    <span>Design, Inspiration, Creative</span>
-                                    <span>3 Comments</span>
-                                </div>
-                                <p>
-                                    Etiam finibus consequat ante ac congue. Quisque porttitor porttitor tempus. Donec maximusLorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla. Nulla sit amet luctus dolor. Etiam finibus consequat ante ac congue. Quisque porttitor porttitor tempus. Donec maximus ipsum non ornare vestibulum...
-                                </p>
-                            </div>
-                        </article>
-                        <article class="blog_card">
-                            <div class="blog_card_top">
-                                <img src="../assets/img/blog/blog2.png" alt="blog title " />
-                                <div class="blog_date">
-                                    31
-                                    <span>
-                                        october 2017
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="blog_card_bottom">
-                                <h4>
-                                    <a href="#">
-                                        A short blog post about design
-                                    </a>
-                                </h4>
-                                <div class="meta_data">
-                                    <span>By Loredana Papp-Dinea</span>
-                                    <span>Design, Inspiration, Creative</span>
-                                    <span>3 Comments</span>
-                                </div>
-                                <p>
-                                    Etiam finibus consequat ante ac congue. Quisque porttitor porttitor tempus. Donec maximusLorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla. Nulla sit amet luctus dolor. Etiam finibus consequat ante ac congue. Quisque porttitor porttitor tempus. Donec maximus ipsum non ornare vestibulum...
-                                </p>
-                            </div>
-                        </article>
-                        <article class="blog_card">
-                            <div class="blog_card_top">
-                                <img src="../assets/img/blog/blog3.png" alt="blog title " />
-                                <div class="blog_date">
-                                    31
-                                    <span>
-                                        october 2017
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="blog_card_bottom">
-                                <h4>
-                                    <a href="#">
-                                        A short blog post about design
-                                    </a>
-                                </h4>
-                                <div class="meta_data">
-                                    <span>By Loredana Papp-Dinea</span>
-                                    <span>Design, Inspiration, Creative</span>
-                                    <span>3 Comments</span>
-                                </div>
-                                <p>
-                                    Etiam finibus consequat ante ac congue. Quisque porttitor porttitor tempus. Donec maximusLorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo est, feugiat nec elementum id, suscipit id nulla. Nulla sit amet luctus dolor. Etiam finibus consequat ante ac congue. Quisque porttitor porttitor tempus. Donec maximus ipsum non ornare vestibulum...
-                                </p>
-                            </div>
-                        </article>
-                    </div>
-                </div>
+        <div class="col-lg-10 col-md-9 col-12 body_block  align-content-center">
+            <!--=================== filter portfolio start====================-->
+<?php 
+if(isset($UserID)){
+    echo '
+<section>
+<div class="card">
+    <div class="box">
+        <div class="img">
+
+            <img class="card-img-top img" src="../assets/upload/avatar.jpg" width="300" height="400" alt="Card image cap">
+          </div>
+            <hr>
+            <h4 class ="card-title">'.$fname." ". $lname.'</h4>
+            <div class="contents">
+               <p class="card-text">Phone number: 0'.$contact.'</p>
+              <p class="card-text">Email:  '.$email.'</p>
+              <button type="button"  class="btn btn-sm btn-success" data-toggle="modal" data-target="'."#" . $UserID.'"  >Details</button>
             </div>
+             
+       </div>
+     </div> 
+  </section>
+    
+  
+<div class="modal fade" id="'.$UserID.'" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLongTitle">User Details</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="center-block col-sm-12" style = "position:center;.">
+            <img src="../assets/upload/avatar.jpg" width="200" class= "details img-responsive">
+          </div>
+          <div class="col-sm-12">
+          <h4>'.$fname." ". $lname.'</h4>
+          <p>Date booked: '.$date.'</p>
+          <p>Venue: '. $venue.'</p>
+          <p>Category: '.$category.'</p>
+          <hr>
+            <p>Email:  '.$email.'<a href="emailBooking.php?userID='.$UserID.'"><button class="btn btn-sm btn-primary">contact</button></a></p>
+            <p>Phone number:  0'. $contact.'<a href="smsBooking.php?userID='. $UserID.'"><button class="btn btn-sm btn-primary">contact</button></p>
+           </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+    </div>
+  </div>
+</div>
+</div>
+
+
+  ';
+} else {
+    echo "Sorry No bookings available";
+}
+?>       
+             
+            </div>
+            <!--=================== filter portfolio end====================-->
         </div>
-        <!--=================== content body end ====================-->
         <!--=================== content body end ====================-->
     </div>
 </div>

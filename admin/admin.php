@@ -43,47 +43,21 @@ function valid(){
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <b>Change Password</b><hr>
-                        </div>
-                        <!-- <font color="red" align="center"><?php echo htmlentities($_SESSION['msg']);?><?php echo htmlentities($_SESSION['msg']="");?></font> -->
-                        <div class="panel-body">
-                            <form name="change" action="" method="POST" onsubmit="return valid();">
-                                <div class="form-group">
-                                    <label for="current">Current Password</label>
-                                    <input type="password" class="form-control" id="current" name="current" required/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="new">New Password</label>
-                                    <input type="password" class="form-control" id="new" name="new"required />
-                                </div>
-                                <div class="form-group">
-                                    <label for="confirm">Confirm Password</label>
-                                    <input type="password" class="form-control" id="confirm" name="confirm"required />
-                                </div>
-                                <button type="submit" name="submit" class="btn btn-success center-block">Change</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <b>Administrator information</b><hr>
-                        </div>
+                            <b>Administrator information</b>
+                        </div><br>
                         <div class="panel-body">
                             <div class="table-responsive table-hover">
-                                <div class="table">
+                                <table class="table">
                                     <thead>
                                         <th>Admin ID</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
+                                        <th>Name</th>
                                         <th>E-mail</th>
                                         <th>Action</th>
                                     </thead>
-                                </div>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -113,9 +87,33 @@ function valid(){
                                     <input type="radio" name="access" value="4" > Regular
                                 </div>
 
-                                    <button type="admin" name="add" class="btn btn-success center-block">Submit</button>
+                                    <button type="admin" name="add" class="btn btn-primary center-block">Submit</button>
                                 </div>
                             </form>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <b>Change Password</b><hr>
+                            </div>
+                            <div class="panel-body">
+                                <form name="change" action="" method="POST" onsubmit="return valid();">
+                                    <div class="form-group">
+                                        Current Password
+                                        <input type="password" class="form-control" id="current" name="current" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        New Password
+                                        <input type="password" class="form-control" id="new" name="new"required />
+                                    </div>
+                                    <div class="form-group">
+                                        Confirm Password
+                                        <input type="password" class="form-control" id="confirm" name="confirm"required />
+                                    </div>
+                                    <button type="submit" name="submit" class="btn btn-primary center-block">Change</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

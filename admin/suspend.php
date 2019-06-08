@@ -22,7 +22,7 @@ if (!isset($_SESSION['username'])){
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h4>Suspended Accounts</h4><hr>
+                    <h4>Suspended Accounts</h4>
                 </div>
             </div>
             <div class="row">
@@ -51,10 +51,10 @@ if (!isset($_SESSION['username'])){
                                             <td><?php echo htmlentities($row['lname']);?></td>
                                             <td><?php echo htmlentities($row['email']);?></td>
                                             <td>
-                                                <a class="btn btn-xs btn-primary" href="home.php?id=<?php echo $row['UserID']?>&pass=update" onClick="return confirm('Are you sure you want to reset password?')">
+                                                <a href="home.php?id=<?php echo $row['UserID']?>&pass=update" onClick="return confirm('Are you sure you want to reset password?')">
                                                 <i class="fa fa-eye" type="submit" name="submit" id="submit"></i></a>
-                                                <a class="btn btn-xs btn-danger" href="suspend.php?id=<?php echo $row['UserID']?>&sus=suspend" onClick="return confirm('Are you sure you want to lift the ban on this account?\nThis process will give the owner of this account all their previlages.')">
-                                                <i class="fa fa-refresh" type="suspend" name="suspend" id="suspend"></i></a>
+                                                <a href="suspend.php?id=<?php echo $row['UserID']?>&sus=suspend" onClick="return confirm('Are you sure you want to LIFT BAN on this account?\nThis process will give the owner of this account all their previlages.')">
+                                                <i class="fa fa-refresh fa-spin red" type="suspend" name="suspend" id="suspend"></i></a>
                                             </td>
                                         </tr>
                                         <?php

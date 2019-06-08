@@ -2,39 +2,37 @@
 session_start();
 include('../DB/db.php');
 
-		$con = new DBConnector;
+$con = new DBConnector;
 
-		if(isset($_POST['signup']))
-		{
-			$fname = $_POST['fname'];
-			$lname = $_POST['lname'];
-			$email = $_POST['email'];
-			$username = $_POST['username'];
-			$password = $_POST['pass'];
-			$Cpassword = $_POST['repeat-pass'];
-			$contact = $_POST['contact'];
-			$category = $_POST['category'];
+if(isset($_POST['signup'])){
+	$fname = $_POST['fname'];
+	$lname = $_POST['lname'];
+	$email = $_POST['email'];
+	$username = $_POST['username'];
+	$password = $_POST['pass'];
+	$Cpassword = $_POST['repeat-pass'];
+	$contact = $_POST['contact'];
+	$category = $_POST['category'];
 
-			if($password == $Cpassword ){
-				$_SESSION['username'] = $username;
-				$pass = password_hash($password,PASSWORD_DEFAULT);
-				echo $pass;
-				if($category=="User"){
-					$sql = mysqli_query($con->conn, "INSERT INTO `users`(`fname`, `lname`, `username`, `password`, `email`, `contact`, `access_level`) VALUES ('$fname','$lname','$username','$pass','$email','$contact',2)");
-					echo "its a success";
-					header("location:login.php");
-				}else{
-					$sql = mysqli_query($con->conn, "INSERT INTO `users`(`fname`, `lname`, `username`, `password`, `email`, `contact`, `access_level`) VALUES ('$fname','$lname','$username','$pass','$email','$contact',3)");
-					$sql1 = mysqli_query($con->conn, "SELECT UserID FROM `users` WHERE username = '$username'");
-					while($row=mysqli_fetch_array($sql1)){
-						$UserID = $row['UserID'];
-						}
-					$res = mysqli_query($con->conn, "INSERT INTO `photographers`(`UserID`) VALUES ('$UserID')");
-					echo "its a success";
-					header("location:login.php");
-				}
-			}
+	if($password == $Cpassword ){
+		$_SESSION['username'] = $username;
+		$pass = password_hash($password,PASSWORD_DEFAULT);
+		echo $pass;
+		if($category=="User"){
+			$sql = mysqli_query($con->conn, "INSERT INTO `users`(`fname`, `lname`, `username`, `password`, `email`, `contact`, `access_level`, `active`) VALUES ('$fname','$lname','$username','$pass','$email','$contact',2,1)");
+			echo "its a success";
+			header("location:../login/login.php");
+		} else {
+			$sql = mysqli_query($con->conn, "INSERT INTO `users`(`fname`, `lname`, `username`, `password`, `email`, `contact`, `access_level`, `active`) VALUES ('$fname','$lname','$username','$pass','$email','$contact',3,1)");
+			$sql1 = mysqli_query($con->conn, "SELECT UserID FROM `users` WHERE username = '$username'");
+			while($row=mysqli_fetch_array($sql1)){
+				$UserID = $row['UserID'];
 		}
+		$res = mysqli_query($con->conn, "INSERT INTO `photographers`(`UserID`) VALUES ('$UserID')");
+		echo "its a success";
+		}
+	}
+}
 	   
 ?>
 <!DOCTYPE html>
@@ -77,29 +75,29 @@ include('../DB/db.php');
 			<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
 				<form class="login100-form validate-form" action="#" method="POST">
 					<span class="login100-form-title p-b-59">
-						Sign Up
+						Sign In
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate="Name is required">
 						<span class="label-input100">First Name</span>
-						<input class="input100" type="text" name="fname" placeholder="First Name">
+						<input class="input100" type="text" name="fname" placeholder="First Name" autocomplete="off">
 						<span class="focus-input100"></span>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate="Name is required">
 							<span class="label-input100">Last Name</span>
-							<input class="input100" type="text" name="lname" placeholder="Last Name...">
+							<input class="input100" type="text" name="lname" placeholder="Last Name..." autocomplete="off">
 							<span class="focus-input100"></span>
 						</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz" >
 						<span class="label-input100">Email</span>
-						<input class="input100" type="text" name="email" placeholder="Email addess...">
+						<input class="input100" type="text" name="email" placeholder="Email addess..."autocomplete="off">
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Username is required">
 						<span class="label-input100">Username</span>
-						<input class="input100" type="text" name="username" placeholder="Username...">
+						<input class="input100" type="text" name="username" placeholder="Username..."autocomplete="off">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -116,7 +114,7 @@ include('../DB/db.php');
 					</div>
 					<div class="wrap-input100 validate-input" data-validate="Contact is required">
 							<span class="label-input100">Contact</span>
-							<input class="input100" type="text" name="contact" placeholder="07...">
+							<input class="input100" type="text" name="contact" placeholder="07..." autocomplete="off">
 							<span class="focus-input100"></span>
 						</div>
 						
@@ -149,7 +147,7 @@ include('../DB/db.php');
 						</div>
 
 						<a href="login.php" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
-							Sign in
+							Sign In
 							<i class="fa fa-long-arrow-right m-l-5"></i>
 						</a>
 					</div>

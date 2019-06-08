@@ -2,36 +2,31 @@
 session_start();
 include('../DB/db.php');
 
-		$con = new DBConnector;
+$con = new DBConnector;
 
-		if(isset($_POST['login']))
-		{
-		
-			$username = $_POST['username'];
-			$password = $_POST['pass'];
+if(isset($_POST['login'])){
+	$username = $_POST['username'];
+	$password = $_POST['pass'];
 
-			$_SESSION['username'] = $username;
+	$_SESSION['username'] = $username;
 
-            $res = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
-            while($row=mysqli_fetch_array($res)){
-                if(password_verify($password,$row['password']) && $username == $row['username']){
-                   if($row['access_level'] == 1){
-                    echo "Please proceed to the admin module";
-                   } elseif($row['access_level'] == 2){
-					echo "Please proceed to the user module";
-					header("location: ../users/index.php");
-                   }
-                   else{
-                    header("location: ../photographers/index.php");
-                    echo "Please proceed to the photographers module";
-                   }
-                }
+	$res = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
+	while($row=mysqli_fetch_array($res)){
+		if(password_verify($password,$row['password']) && $username == $row['username']){
+			if ($row['active'] == 0){
+				echo "Account has been suspended due to violation on policy! Please contact administrator";
+			} else {
+			if($row['access_level'] == 1){
+				header('location:../admin/home.php');
+			} else if ($row['access_level'] == 2){
+				header("location: ../users/index.php");
+            } else {
+                header("location: ../photographers/index.php");
+                echo "Please proceed to the photographers module";
             }
-            
-            
-            
-        }
-	   
+        }}
+    }
+}  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -86,28 +81,13 @@ include('../DB/db.php');
 						<span class="label-input100">Password</span>
 						<input class="input100" type="password" name="pass" placeholder="*************">
 						<span class="focus-input100"></span>
-					</div>
-					<div class="flex-m w-full p-b-33">
-						<div class="contact100-form-checkbox">
-							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-							<label class="label-checkbox100" for="ckb1">
-								<span class="txt1">
-									I agree to the
-									<a href="#" class="txt2 hov1">
-										Terms of User
-									</a>
-								</span>
-							</label>
-						</div>
-
-						
-					</div>
+					</div>	
 
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button class="login100-form-btn" name="login">
-								login
+								Login
 							</button>
 						</div>
 

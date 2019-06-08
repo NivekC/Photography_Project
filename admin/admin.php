@@ -7,13 +7,14 @@ if (!isset($_SESSION['username'])){
     $con = new DBConnector;
 
     if (isset($_POST['submit'])){
-        $sql = mysqli_query($con->conn, "SELECT password FROM users WHERE password = '" .password_hash($_POST['current'],PASSWORD_DEFAULT)."' && access_level = 1");
+        $sql = mysqli_query($con->conn, "select password from users where password = '" .password_hash($_POST['current'],PASSWORD_DEFAULT)."' && username = '".$_SESSION['username']."'");
         $num = mysqli_fetch_array($sql);
         if ($num > 0){
-            $query = mysqli_query($con->conn, "UPDATE user SET password='" .password_hash($_POST['new'],PASSWORD_DEFAULT). "'");
+            $query = mysqli_query($con->conn, "update user set password='" .password_hash($_POST['new'],PASSWORD_DEFAULT). "'");
             $_SESSION['msg'] = "Password Changed Successsfuly"; 
         } else {
-            $_SESSION['msg'] = "Passwords don't match!";
+            $_SESSION['msg'] = "Error:\nPassowrds don't match!";
+            header ('location: admin.php');
         }
     }
 }
@@ -24,7 +25,7 @@ if (!isset($_SESSION['username'])){
 <script type="text/javascript">
 function valid(){
     if(document.change.new.value != document.change.confirm.value){
-        alert("Passwords do not match!");
+        alert("New password and Confirm password fields don't match!");
         document.change.confirm.focus();
         return false;
     }
@@ -47,6 +48,7 @@ function valid(){
                         <div class="panel-heading">
                             <b>Change Password</b><hr>
                         </div>
+                        <!-- <font color="red" align="center"><?php echo htmlentities($_SESSION['msg']);?><?php echo htmlentities($_SESSION['msg']="");?></font> -->
                         <div class="panel-body">
                             <form name="change" action="" method="POST" onsubmit="return valid();">
                                 <div class="form-group">
@@ -121,4 +123,4 @@ function valid(){
         </div>
     </div>
 </body>
-</html>
+</html>  

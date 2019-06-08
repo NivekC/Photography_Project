@@ -8,6 +8,7 @@
             <a class="nav-item nav-link" href="home.php">Photographers </a> 
             <a class="nav-item nav-link" href="users.php">Clients</a>
             <a class="nav-item nav-link" href="post.php">Post</a>
+            <a class="nav-item nav-link" href="suspend.php">Suspended </a>
             <a class="nav-item nav-link" href="report.php">Reports</a>
             <a class="nav-item nav-link" href="logout.php">Logout</a>
         </div>

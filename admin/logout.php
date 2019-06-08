@@ -1,9 +1,10 @@
 <?php
-session_start();
-$_SESSION['username-']=="";
-session_unset($_SESSION['username']);
-$_SESSION['errmsg']="Successfully logged out!";
+    session_start();
+    echo $_SESSION['username'];
+    unset($_SESSION['username']);
+    session_destroy();
+    if(!isset($_SESSION['username'])){
+        header("location:../login/login.php");
+    }
+
 ?>
-<script language="javascript">
-document.location="../login/login.php";
-</script>

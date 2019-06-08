@@ -12,7 +12,7 @@ if (!isset($_SESSION['username'])){
 <html lang="en">
     <?php include ('include/header.php'); ?>
 <body>
-    <?php include ("include/navbar.php"); ?><br> <br>
+    <?php include ("include/navbar.php"); ?><br>
     <div class="content-wrapper">
         <div class="container">
             <div class="row">
@@ -36,7 +36,7 @@ if (!isset($_SESSION['username'])){
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $sql = mysqli_query($con->conn,"SELECT * FROM users WHERE access_level=2");
+                                            $sql = mysqli_query($con->conn,"SELECT * FROM users WHERE access_level = 2 && active = 1");
                                             while($row = mysqli_fetch_array($sql)){
                                         ?>
                                         <tr>
@@ -46,8 +46,8 @@ if (!isset($_SESSION['username'])){
                                             <td><?php echo htmlentities($row['email']);?></td>
                                             <td><?php echo htmlentities($row['contact']);?></td>
                                             <td>   
-                                                <a class="btn btn-xs btn-info" href="home.php?id=<?php echo $row['UserID']?>&pass=update" onClick="return confirm('Are you sure you want to reset password?')">
-                                                <i class="fa fa-edit" type="submit" name="submit" id="submit"></i></a>
+                                                <a class="btn btn-xs btn-primary" href="home.php?id=<?php echo $row['UserID']?>&pass=update" onClick="return confirm('Are you sure you want to reset password?')">
+                                                <i class="fa fa-eye" type="submit" name="submit" id="submit"></i></a>
                                                 <a class="btn btn-xs btn-danger" href="home.php?id=<?php echo $row['UserID']?>&sus=suspend" onClick="return confirm('Are you sure you eant to suspend account?')">
                                                 <i class="fa fa-warning" type="suspend" name="suspend" id="suspend"></i></a>
                                             </td>

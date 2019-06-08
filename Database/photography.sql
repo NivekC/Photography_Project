@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2019 at 03:38 PM
+-- Generation Time: Jun 08, 2019 at 11:56 PM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.3.5
 
@@ -35,18 +35,18 @@ CREATE TABLE `booking` (
   `category` varchar(50) NOT NULL,
   `photographerID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
-  `notification` int(11) NOT NULL DEFAULT '1'
+  `notification` int(11) NOT NULL DEFAULT '1',
+  `approved` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `booking`
 --
 
-INSERT INTO `booking` (`bookID`, `date`, `venue`, `category`, `photographerID`, `UserID`, `notification`) VALUES
-(14, '2018-08-03', 'Nairobi', 'Birthday shoots', 1, 1, 0),
-(15, '2019-05-30', 'kenya', 'Event Photography', 2, 4, 0),
-(16, '2019-01-29', 'Strathmore', 'Photoshoot', 1, 5, 0),
-(17, '2019-05-29', 'Eldoret', 'Wedding shoot', 2, 1, 0);
+INSERT INTO `booking` (`bookID`, `date`, `venue`, `category`, `photographerID`, `UserID`, `notification`, `approved`) VALUES
+(14, '2018-08-03', 'Nairobi', 'Birthday shoots', 1, 1, 0, 0),
+(16, '2019-01-29', 'Strathmore', 'Photoshoot', 1, 5, 0, 0),
+(17, '2019-05-29', 'Eldoret', 'Wedding shoot', 2, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -141,15 +141,16 @@ CREATE TABLE `reports` (
   `description` text NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `photographerID` int(11) NOT NULL,
-  `photographsID` int(11) NOT NULL
+  `photographsID` int(11) NOT NULL,
+  `view` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `reports`
 --
 
-INSERT INTO `reports` (`ReportID`, `title`, `description`, `date`, `photographerID`, `photographsID`) VALUES
-(2, 'Racism', 'Lonely together', '2019-06-04 23:35:45', 1, 8);
+INSERT INTO `reports` (`ReportID`, `title`, `description`, `date`, `photographerID`, `photographsID`, `view`) VALUES
+(2, 'Racism', 'Lonely together', '2019-06-04 23:35:45', 1, 8, 0);
 
 -- --------------------------------------------------------
 
@@ -188,7 +189,7 @@ CREATE TABLE `users` (
   `username` varchar(40) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `contact` int(11) NOT NULL,
+  `contact` varchar(10) NOT NULL,
   `prof_pic` varchar(255) NOT NULL,
   `access_level` int(11) NOT NULL,
   `active` tinyint(4) NOT NULL
@@ -199,12 +200,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`UserID`, `fname`, `lname`, `username`, `password`, `email`, `contact`, `prof_pic`, `access_level`, `active`) VALUES
-(1, 'Isaac', 'Kiplel', 'isaac', '$2y$10$43GKopjpn50G3o8sRy/2cOW6er.0xfRF8zJuLRafDHygHQB6b.Pgi', 'kiplelisaac@gmail.com', 707088150, 'upload/amani.jpg', 2, 1),
-(2, 'Amani', 'Newton', 'amani', '$2y$10$S3qxFQMB/10fFhdzWiMGF.cWQ3tRHGfoNsv4yyTaDP62Fk8v18jd.', 'amani@gmail.com', 774010328, 'upload/amani.jpg', 3, 1),
-(3, 'Jane', 'Doe', 'jane', '$2y$10$D6qYB5/989SgEiJ24ye01uSCfYas.irn.VDiTFSY/wj5JwozlOvLy', 'janedoe@gmail.com', 702805215, '', 3, 1),
-(4, 'john', 'doe', 'john', '$2y$10$jrkkwfnpI7rEKaAevbdddeKNuIXg7au1IpuagoUDDihiwL5tqDn2C', 'johndoe@gmail.com', 774010328, '', 2, 1),
-(5, 'mistah', 'Mboya', 'mistah', '$2y$10$reRtvM71JAtdmC9O4d4mle76upUCJid1rPN3TmirvYg75cyIhQ3D.', 'michael.mboya@strathmore.edu', 799529328, '', 2, 1),
-(6, 'admin', 'admin', 'admin', '$2y$10$uzMVKM/glQaLUJEoySQyz.g.iTaIFQEcMnXzdiNqXT8a9rNskppIe', 'admin123@gmail.com', 714253674, '', 1, 1);
+(1, 'Isaac', 'Kiplel', 'isaac', '$2y$10$43GKopjpn50G3o8sRy/2cOW6er.0xfRF8zJuLRafDHygHQB6b.Pgi', 'kiplelisaac@gmail.com', '0707088150', 'upload/amani.jpg', 2, 1),
+(2, 'Amani', 'Newton', 'amani', '$2y$10$S3qxFQMB/10fFhdzWiMGF.cWQ3tRHGfoNsv4yyTaDP62Fk8v18jd.', 'amani@gmail.com', '0774010328', 'upload/amani.jpg', 3, 1),
+(3, 'Jane', 'Doe', 'jane', '$2y$10$D6qYB5/989SgEiJ24ye01uSCfYas.irn.VDiTFSY/wj5JwozlOvLy', 'janedoe@gmail.com', '0702805215', '', 3, 1),
+(4, 'john', 'doe', 'john', '$2y$10$jrkkwfnpI7rEKaAevbdddeKNuIXg7au1IpuagoUDDihiwL5tqDn2C', 'johndoe@gmail.com', '0774010328', '', 2, 1),
+(5, 'mistah', 'Mboya', 'mistah', '$2y$10$reRtvM71JAtdmC9O4d4mle76upUCJid1rPN3TmirvYg75cyIhQ3D.', 'michael.mboya@strathmore.edu', '0799529328', '', 2, 1),
+(6, 'admin', 'admin', 'admin', '$2y$10$uzMVKM/glQaLUJEoySQyz.g.iTaIFQEcMnXzdiNqXT8a9rNskppIe', 'admin123@gmail.com', '0714253674', '', 1, 1),
+(8, 'Google', 'Play', 'google', '$2y$10$bJJiG2uyVB8YpAKuIZkode7IYHMY/hUhni9bZVcys/BTJSVrd4Y0e', 'googleplay@gmail.com', '0714253663', '', 2, 0),
+(11, 'Test', 'Admin', 'Test', '$2y$10$mdvp2npLr8FXbazqeMU6c.VGfFaU4mW4RZxxbPo23A0e9PtI6vk72', 'test@123.com', '0789654123', '', 4, 1);
 
 --
 -- Indexes for dumped tables
@@ -317,7 +320,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables

@@ -5,7 +5,10 @@ if (!isset($_SESSION['username'])){
     header('location:../login/login.php');  
 } else {
     $con = new DBConnector;
-
+    if(isset($_GET['sus'])){
+        mysqli_query($con->conn,"update users set active = 0 where UserID = '".$_GET['id']."'");
+        $_SESSION['msg'] = "Account has been suspended";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -46,9 +49,9 @@ if (!isset($_SESSION['username'])){
                                             <td><?php echo htmlentities($row['email']);?></td>
                                             <td><?php echo htmlentities($row['contact']);?></td>
                                             <td>   
-                                                <a href="home.php?id=<?php echo $row['UserID']?>&pass=update" onClick="return confirm('Are you sure you want to reset password?')">
+                                                <a href="users.php?id=<?php echo $row['UserID']?>&pass=update" onClick="return confirm('Are you sure you want to reset password?')">
                                                 <i class="fa fa-eye" type="submit" name="submit" id="submit"></i></a>
-                                                <a href="home.php?id=<?php echo $row['UserID']?>&sus=suspend" onClick="return confirm('Are you sure you eant to suspend account?')">
+                                                <a href="users.php?id=<?php echo $row['UserID']?>&sus=suspend" onClick="return confirm('Are you sure you eant to suspend account?')">
                                                 <i class="fa fa-warning red" type="suspend" name="suspend" id="suspend"></i></a>
                                             </td>
                                         </tr>

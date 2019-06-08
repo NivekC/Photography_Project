@@ -5,6 +5,9 @@ if (!isset($_SESSION['username'])){
     header('location:../login/login.php');
 } else {
     $con = new DBConnector;
+    if (isset($_GET['del'])){
+        mysqli_query($con->conn,"delete from reports where ReportID = '".$_GET['id']."'");
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -39,8 +42,8 @@ if (!isset($_SESSION['username'])){
                                             <td><?php echo htmlentities($row['title']);?></td>
                                             <td><?php echo htmlentities($row['description']);?></td>
                                             <td>
-                                                <a  href="home.php?id=<?php echo $row['UserID']?>&pass=update"><i class="fa fa-eye-slash" type="submit" name="submit" id="submit"></i></a>
-                                                <a  href="home.php?id=<?php echo $row['UserID']?>&del=delete" onClick="return confirm('Are you sure you eant to delete report?')">
+                                                <a  href="view.php?id=<?php echo $row['UserID']?>&see=view"><i class="fa fa-eye-slash" type="submit" name="submit" id="submit"></i></a>
+                                                <a  href="report.php?id=<?php echo $row['ReportID']?>&del=delete" onClick="return confirm('Are you sure you eant to delete report?')">
                                                 <i class="fa fa-trash red" type="delete" name="delete" id="delete"></i></a>
                                             </td>
                                         </tr>

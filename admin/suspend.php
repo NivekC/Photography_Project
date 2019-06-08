@@ -11,6 +11,9 @@ if (!isset($_SESSION['username'])){
         mysqli_query($con->conn,"update users set active = 1 where UserID = '".$_GET['id']."'");
         $_SESSION['msg'] = "Account has been restored";
     }
+    if (isset($_GET['del'])){
+        mysqli_query($con->conn,"delete from users where UserId = '".$_GET['id']."'");
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -37,6 +40,7 @@ if (!isset($_SESSION['username'])){
                                             <th>First Name</th>
                                             <th>Last Name</th>
                                             <th>E-mail</th>
+                                            <th>Contact</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -50,11 +54,12 @@ if (!isset($_SESSION['username'])){
                                             <td><?php echo htmlentities($row['fname']);?></td>
                                             <td><?php echo htmlentities($row['lname']);?></td>
                                             <td><?php echo htmlentities($row['email']);?></td>
+                                            <td><?php echo htmlentities($row['contact']);?></td>
                                             <td>
-                                                <a href="home.php?id=<?php echo $row['UserID']?>&pass=update" onClick="return confirm('Are you sure you want to reset password?')">
-                                                <i class="fa fa-eye" type="submit" name="submit" id="submit"></i></a>
                                                 <a href="suspend.php?id=<?php echo $row['UserID']?>&sus=suspend" onClick="return confirm('Are you sure you want to LIFT BAN on this account?\nThis process will give the owner of this account all their previlages.')">
-                                                <i class="fa fa-refresh fa-spin red" type="suspend" name="suspend" id="suspend"></i></a>
+                                                <i class="fa fa-refresh" type="suspend" name="suspend" id="suspend"></i></a>
+                                                <a href="suspend.php?id=<?php echo $row['UserID']?>&del=delete" onClick="return confirm('Are you sure you want to delete this account?\nThis process is irreversable!')">
+                                                <i class="fa fa-trash red" type="submit" name="submit" id="submit"></i></a>
                                             </td>
                                         </tr>
                                         <?php

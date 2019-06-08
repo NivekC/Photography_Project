@@ -21,7 +21,6 @@ if(isset($_POST['signup'])){
 
 		if($category=="User"){
 			$sql = mysqli_query($con->conn, "INSERT INTO `users`(`fname`, `lname`, `username`, `password`, `email`, `contact`, `access_level`, `active`) VALUES ('$fname','$lname','$username','$pass','$email','$contact',2,1)");
-			echo "its a success";
 			header("location:login.php");
 		} else {
 			$sql = mysqli_query($con->conn, "INSERT INTO `users`(`fname`, `lname`, `username`, `password`, `email`, `contact`, `access_level`,`active`) VALUES ('$fname','$lname','$username','$pass','$email','$contact',3,1)");

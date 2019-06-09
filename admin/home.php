@@ -49,8 +49,7 @@ if (!isset($_SESSION['username'])){
                                             <td><?php echo htmlentities($row['email']);?></td>
                                             <td><?php echo htmlentities($row['contact']);?></td>
                                             <td>
-                                                <a href="home.php?id=<?php echo $row['UserID']?>&pass=update" onClick="return confirm('Are you sure you want to reset password?')">
-                                                <i class="fa fa-eye" type="submit" name="submit" id="submit"></i></a>
+                                                <a href="view.php?id=<?php echo $row['UserID']?>&see=view"><i class="fa fa-eye" type="submit" name="submit" id="submit"></i></a>
                                                 <a href="home.php?id=<?php echo $row['UserID']?>&sus=suspend" onClick="return confirm('Are you sure you want to suspend account?')">
                                                 <i class="fa fa-warning red" type="suspend" name="suspend" id="suspend"></i></a>
                                             </td>

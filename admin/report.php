@@ -42,7 +42,7 @@ if (!isset($_SESSION['username'])){
                                             <td><?php echo htmlentities($row['title']);?></td>
                                             <td><?php echo htmlentities($row['description']);?></td>
                                             <td>
-                                                <a  href="view.php?id=<?php echo $row['UserID']?>&see=view"><i class="fa fa-eye-slash" type="submit" name="submit" id="submit"></i></a>
+                                                <a  href="view.php?id=<?php echo $row['ReportID']?>&see=view"><i class="fa fa-eye-slash" type="submit" name="submit" id="submit"></i></a>
                                                 <a  href="report.php?id=<?php echo $row['ReportID']?>&del=delete" onClick="return confirm('Are you sure you eant to delete report?')">
                                                 <i class="fa fa-trash red" type="delete" name="delete" id="delete"></i></a>
                                             </td>

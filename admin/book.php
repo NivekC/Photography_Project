@@ -32,7 +32,7 @@ if (!isset($_SESSION['username'])){
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Booking ID</th>
+                                            <th>Book ID</th>
                                             <th>Date</th>
                                             <th>Venue</th>
                                             <th>Category</th>

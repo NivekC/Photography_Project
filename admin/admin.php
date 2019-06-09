@@ -23,8 +23,7 @@ if (!isset($_SESSION['username'])){
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
-    <?php include ("include/header.php") ?>
+    <?php include ("include/header.php"); ?>
 <body>
     <?php include ("include/navbar.php"); ?><br>
     <div class="content-wrapper">
@@ -35,7 +34,7 @@ if (!isset($_SESSION['username'])){
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <b>Administrator information</b>
@@ -47,6 +46,7 @@ if (!isset($_SESSION['username'])){
                                         <th>Admin ID</th>
                                         <th>First Name</th>
                                         <th>Last Name</th>
+                                        <th>Contact</th>
                                         <th>Action</th>
                                     </thead>
                                     <tbody>
@@ -58,6 +58,7 @@ if (!isset($_SESSION['username'])){
                                             <td><?php echo htmlentities($row['UserID']);?></td>
                                             <td><?php echo htmlentities($row['fname']);?></td>
                                             <td><?php echo htmlentities($row['lname']);?></td>
+                                            <td><?php echo htmlentities($row['contact']);?></td>
                                             <td>
                                                 <a href="admin.php?id=<?php echo $row['UserID']?>&del=delete" onClick="return confirm('Are you sure you want to DELETE this account?\nThis process is irreversable!')">
                                                 <i class="fa fa-trash red" type="delete" name="delete" id="delete"></i></a>
@@ -72,6 +73,7 @@ if (!isset($_SESSION['username'])){
                         </div>
                     </div>
                 </div>
+                <div class="col-md-1"></div>
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -103,30 +105,6 @@ if (!isset($_SESSION['username'])){
                                     <button type="submit" name="submit" id="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <b>Change Password</b><hr>
-                            </div>
-                            <div class="panel-body">
-                                <form name="change" action="" method="POST" onsubmit="return valid();">
-                                    <div class="form-group">
-                                        Current Password
-                                        <input type="password" class="form-control" id="current" name="current" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        New Password
-                                        <input type="password" class="form-control" id="new" name="new"required />
-                                    </div>
-                                    <div class="form-group">
-                                        Confirm Password
-                                        <input type="password" class="form-control" id="confirm" name="confirm"required />
-                                    </div>
-                                    <button type="submit" name="submit" class="btn btn-primary center-block">Change</button>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -30,14 +30,14 @@ if (!isset($_SESSION['username'])){
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h4>Administrator Management</h4> <hr>
+                    <h4>Administrator Management </h4> <hr>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-8">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <b>Administrator information</b>
+                            <b>Administrator information(minor)</b>
                         </div><br>
                         <div class="panel-body">
                             <div class="table-responsive table-hover">

@@ -4,7 +4,7 @@
     unset($_SESSION['username']);
     session_destroy();
     if(!isset($_SESSION['username'])){
-        header("location:../login/login.php");
+        header("location:../Authenticator/login.php");
     }
 
 ?>

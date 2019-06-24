@@ -101,7 +101,7 @@ if(isset($_POST['update'])){
     box-shadow:0 20px 50px rgba(0,0,0,.1);
     border-radius:10px;
     transition:0.5s;
-    float:right;
+    float:left;
     margin-right:50px;
    
 }

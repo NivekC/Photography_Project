@@ -4,7 +4,7 @@ include_once('../DB/db.php');
 
 if(!isset($_SESSION['username']))
 {
-    header("location:../authenticator/login.php");
+    header("location:../Authenticator/login.php");
 }
 
 //photographers details

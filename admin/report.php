@@ -25,7 +25,7 @@ if (!isset($_SESSION['username'])){
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive table-hover table-striped">
-                                <table class="table">
+                                <table class="table" id="example" cellspacing="0" width="1000px">
                                     <thead>
                                         <th>Report ID</th>
                                         <th>Title</th>
@@ -59,5 +59,10 @@ if (!isset($_SESSION['username'])){
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+    </script>
 </body>
 </html>

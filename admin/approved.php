@@ -5,10 +5,6 @@ if (!isset($_SESSION['username'])){
     header('location:../login/login.php');
 } else {
     $con = new DBConnector;
-    if(isset($_GET['app'])){
-        mysqli_query($con->conn,"update booking set approved = 1 where bookID = '".$_GET['id']."'");
-        $_SESSION['msg'] = "Account has been restored";
-    }
     if (isset($_GET['del'])){
         mysqli_query($con->conn,"delete from booking where bookID = '".$_GET['id']."'");
     }
@@ -25,7 +21,7 @@ if (!isset($_SESSION['username'])){
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4>Event Bookings<a href="approved.php" class="pull-right" style="text-decoration: none;">Approved</a></h4>
+                            <h4>Approved Bookings</h4>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive table-hover table-striped">
@@ -43,7 +39,7 @@ if (!isset($_SESSION['username'])){
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $sql = mysqli_query($con->conn,"SELECT * FROM booking WHERE approved = 0");
+                                            $sql = mysqli_query($con->conn,"SELECT * FROM booking WHERE approved = 1");
                                             while($row = mysqli_fetch_array($sql)){
                                         ?>
                                         <tr>
@@ -54,8 +50,6 @@ if (!isset($_SESSION['username'])){
                                             <td><?php echo htmlentities($row['photographerID']);?></td>
                                             <td><?php echo htmlentities($row['UserID']);?></td>
                                             <td>
-                                                <a href="book.php?id=<?php echo $row['bookID']?>&app=approve" onClick="return confirm('Aprove this event?')">
-                                                <i class="fa fa-check-square" type="approve" name="approve" id="approve"></i></a>
                                                 <a href="book.php?id=<?php echo $row['bookID']?>&del=delete" onClick="return confirm('Delete this event?\nProcess is irreversable!')">
                                                 <i class="fa fa-trash red" type="delete" name="delete" id="delete"></i></a>
                                             </td> 

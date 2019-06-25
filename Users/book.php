@@ -190,19 +190,7 @@ if(isset($_POST['book'])){
             </div>
             <!--main menu end -->
 
-             <!--filter menu -->
-             <div class="side_menu_section">
-                 <h4 class="side_title">filter by:</h4>
-                 <ul  id="filtr-container"  class="filter_nav">
-                     <li  data-filter="*" class="active"><a href="javascript:void(0)" >all</a></li>
-                     <li data-filter=".branding"> <a href="javascript:void(0)">branding</a></li>
-                     <li data-filter=".design"><a href="javascript:void(0)">design</a></li>
-                     <li data-filter=".photography"><a href="javascript:void(0)">photography</a></li>
-                     <li data-filter=".architecture"><a href="javascript:void(0)">architecture</a></li>
-                 </ul>
-             </div>
-             <!--filter menu end -->
-
+   
 
              <!--social and copyright -->
              <div class="side_menu_bottom">
@@ -221,11 +209,7 @@ if(isset($_POST['book'])){
                              <a href="#"> <i class="ion ion-social-dribbble"></i> </a>
                          </li>
                      </ul>
-                     <div class="copy_right">
-                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                         <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
-                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                     </div>
+                    
                  </div>
              </div>
              <!--social and copyright end -->
@@ -250,7 +234,7 @@ if(isset($_POST['book'])){
 
           <div class="wrap-input100 validate-input" data-validate="Date is required">
  						<span class="label-input100">Date</span>
- 						<input class="input100" type="date" name="date" min="2019-05-29" >
+ 						<input class="input100" type="date" name="date" min="2019-06-26" >
  						<span class="focus-input100"></span>
  					</div>
 

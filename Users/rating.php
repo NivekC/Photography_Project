@@ -134,7 +134,7 @@ if(isset($_POST['cancel']))
    /* position:absolute;*/
     margin-top: 250px;
     top:50%;
-    left:10%;
+    left:15%;
     transform:translate(-50%,-50%);
     width:300px;
     min-height:400px;
@@ -142,7 +142,7 @@ if(isset($_POST['cancel']))
     box-shadow:0 20px 50px rgba(0,0,0,.1);
     border-radius:10px;
     transition:0.5s;
-    float:right;
+    float:left;
     margin-right:50px;
 }
 .card:hover {
@@ -298,7 +298,7 @@ if(isset($_POST['cancel']))
                     </li>
                     
                     <li>
-                        <a class="notification" class="active"  href="rating.php">
+                        <a class="notification active" class="active"  href="rating.php">
                             <span>Ratings</span>
                             <span class="badge"><?php if(isset($not)){if($not>=1&&$notifyValue==1){echo $not;}} ?></span>
                         </a>
@@ -330,11 +330,6 @@ if(isset($_POST['cancel']))
                             <a href="#"> <i class="ion ion-social-dribbble"></i> </a>
                         </li>
                     </ul>
-                    <div class="copy_right">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </div>
                 </div>
             </div>
             
@@ -374,7 +369,7 @@ if($resBooking->num_rows > 0)
         $Bdate = $row['date']; 
         $notifyValue = $row['notification'];   
        
-        if(isset($notifyValue)){
+        if($not>=1&&$notifyValue==1){
             $res =  mysqli_query($con->conn, "SELECT photographers.photographersID,photographers.UserID FROM `photographers` JOIN users ON users.UserID = photographers.UserID WHERE photographersID = '$photographerID'");
         if($res->num_rows > 0)
         {
@@ -476,10 +471,11 @@ if($resBooking->num_rows > 0)
                     }   
                 }
             }    
-        }
+        }else {
+            echo "<h1>No ratings available</h1>";
     }
-} else {
-    echo "No ratings avalable";
+    
+} 
 }
 ?>          
 

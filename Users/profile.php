@@ -230,7 +230,7 @@ if(isset($_POST['update'])){
 					</div>
 					<div class="wrap-input100 validate-input" data-validate="Contact is required">
 							<span class="label-input100">Contact</span>
-							<input class="input100" type="text" name="contact" value="0<?php echo $contact ?>">
+							<input class="input100" type="text" name="contact" value="<?php echo $contact ?>">
 							<span class="focus-input100"></span>
                         </div>
                        

@@ -164,7 +164,7 @@ if(!isset($_SESSION['username']))
                                         {
                                             echo "<h4>Visit the <a href='profile.php'>profile</a> to add a your Bio</a></h4>";
                                         }else {
-                                            echo $bio;
+                                            echo "<h5>$bio</h5>";
                                             
                                         }
                                         ?>
@@ -246,7 +246,7 @@ if(!isset($_SESSION['username']))
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-5 img_section" style="background-image: url('../assets/img/bg/about.png');"></div>
+                        <div class="col-md-6 col-5 img_section" style="background-image: url('../assets/upload/africa-beautiful-beauty-1936154.jpg');"></div>
                     </div>
                 </div>
             </div>

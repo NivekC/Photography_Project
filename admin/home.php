@@ -26,7 +26,7 @@ if (!isset($_SESSION['username'])){
             $string = "+254". $contact; 
             $recipients = $string; 
 
-            $body = "Your account has been suspended due to a report made, please be patient while a review is being done. You will be notified as soon as the review is done. Sorry for the inconvenience caused.";
+            $body = "Your account has been suspended due to a report made based on violatiion of policy(s), please be patient while a review is being done. You will be notified as soon as the review is done. Sorry for any inconveniences caused.";
 
           // Be sure to include the file you've just downloaded
           require_once('AfricasTalkingGateway.php');
@@ -118,7 +118,6 @@ if (!isset($_SESSION['username'])){
                                             <td><?php echo htmlentities($row['email']);?></td>
                                             <td><?php echo htmlentities($row['contact']);?></td>
                                             <td>
-                                                <a href="view.php?id=<?php echo $row['UserID']?>&see=view"><i class="fa fa-eye" type="submit" name="submit" id="submit"></i></a>
                                                 <a href="home.php?id=<?php echo $row['UserID']?>&sus=suspend" onClick="return confirm('Are you sure you want to suspend account?')">
                                                 <i class="fa fa-warning red" type="suspend" name="suspend" id="suspend"></i></a>
                                             </td>

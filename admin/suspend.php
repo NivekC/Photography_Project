@@ -28,7 +28,7 @@ if (!isset($_SESSION['username'])){
             $string = "+254". $contact; 
             $recipients = $string; 
 
-            $body = "Your account ban has just been lifted. Sorry for any inconvenience caused.";
+            $body = "Your account ban has been lifted. Sorry for any inconvenience caused.";
 
           // Be sure to include the file you've just downloaded
           require_once('AfricasTalkingGateway.php');

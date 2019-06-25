@@ -264,9 +264,10 @@ echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
                                                 <div class="img_box_two">
                                                     <img src="../assets/img/icons/satelite.png" alt="info list">
                                                     <div class="content align-items-center">
-                                                        <p>
+                                                        <p><h5>
                                                             Ronald Ngala ST , No234/56<br/>
                                                             Nairobi , KENYA
+                                                            </h5>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -275,8 +276,9 @@ echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
                                                 <div class="img_box_two">
                                                     <img src="../assets/img/icons/scheme.png" alt="info list">
                                                     <div class="content align-items-center">
-                                                        <p>
+                                                        <p><h5>
                                                           Amaniphotography@gmail.com
+                                                          </h5>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -286,7 +288,9 @@ echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
                                                     <img src="../assets/img/icons/smartphone.png" alt="info list">
                                                     <div class="content align-items-center">
                                                         <p>
+                                                        <h5>
                                                             +254706492324
+                                                            </h5>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -317,11 +321,7 @@ echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
                             </div>
                             <!--=================== contact info and form end====================-->
                         </div>
-                        <div class="col-md-6 col-5 img_section"  style="background-color:#000;">
-                            <!--map -->
-                            <div id="map" data-lon="24.036176" data-lat=" 57.039986" class="map"></div>
-                            <!--map end-->
-                        </div>
+                        <div class="col-md-6 col-5 img_section" style="background-image: url('../assets/img/bg/service_bg.png');"></div>
                     </div>
                 </div>
             </div>

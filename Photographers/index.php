@@ -129,18 +129,6 @@ $sql = mysqli_query($con->conn,$ssql);
             </div>
             <!--main menu end -->
 
-            <!--filter menu -->
-            <div class="side_menu_section">
-                <h4 class="side_title">filter by:</h4>
-                <ul  id="filtr-container"  class="filter_nav">
-                    <li  data-filter="*" class="active"><a href="javascript:void(0)" >all</a></li>
-                    <li data-filter=".branding"> <a href="javascript:void(0)">branding</a></li>
-                    <li data-filter=".design"><a href="javascript:void(0)">design</a></li>
-                    <li data-filter=".photography"><a href="javascript:void(0)">photography</a></li>
-                    <li data-filter=".architecture"><a href="javascript:void(0)">Wedding</a></li>
-                </ul>
-            </div>
-            <!--filter menu end -->
 
             <!--social and copyright -->
             <div class="side_menu_bottom">

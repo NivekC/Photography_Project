@@ -17,6 +17,8 @@ if($res->num_rows > 0){
         $sqls = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
         while($row=mysqli_fetch_array($sqls)){
             $lesuserID = $row['UserID'];
+            $fname = $row['fname'];
+            $lname = $row['lname'];
         }
         $dates = date("Y/m/d");
         $resBooking =  mysqli_query($con->conn, "SELECT * FROM `booking` WHERE UserID = '$lesuserID' and notification = 1") or die("Error!: ".mysqli_error($con->conn));
@@ -39,6 +41,11 @@ if($res->num_rows > 0){
 <head>
 <?php include ('../include/ihead.php'); ?>
 <link rel="stylesheet" href="../include/css/index.css">
+<style>
+        .red{
+            color: #ff0000;
+        }
+    </style>
 </head>
 <body>
 <div class="loader">
@@ -80,7 +87,8 @@ if($res->num_rows > 0){
                                             <div class='card' style='width:20rem; '>
                                                 <img src='../assets/$images' class='card-img-top'  alt='pro1' width='100%' height='300px' style='padding:10px;' ' />
                                                     <div class='card-body'>
-                                                        <a href='reporting.php?photographersID=".$photoID."&photosID=".$photosID."'><i class='material-icons'>report</i></a>
+                                                        <a href='reporting.php?photographersID=".$photoID."&photosID=".$photosID."'><i class='fa fa-warning red' style='font-size:24px;'></i></a>
+                                                        <a href='portfolio.php?photographersID=".$photoID."><button class='btn btn-primary'>View</button></a>
                                                     </div>
                                             </div>
                                         </div>

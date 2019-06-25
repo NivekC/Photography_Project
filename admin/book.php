@@ -25,7 +25,7 @@ if (!isset($_SESSION['username'])){
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4>Event Bookings<a href="approved.php" class="pull-right" style="text-decoration: none;">Approved</a></h4>
+                            <h4>Event Bookings</h4>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive table-hover table-striped">

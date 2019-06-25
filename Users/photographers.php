@@ -93,7 +93,7 @@ if(isset($_POST['update'])){
    /* position:absolute;*/
     margin-top: 250px;
     top:50%;
-    left:10%;
+    left:15%;
     transform:translate(-50%,-50%);
     width:300px;
     min-height:400px;
@@ -270,18 +270,6 @@ if(isset($_POST['update'])){
             </div>
             <!--main menu end -->
 
-            <!--filter menu -->
-            <div class="side_menu_section">
-                <h4 class="side_title">filter by:</h4>
-                <ul  id="filtr-container"  class="filter_nav">
-                    <li  data-filter="*" class="active"><a href="javascript:void(0)" >all</a></li>
-                    <li data-filter=".branding"> <a href="javascript:void(0)">branding</a></li>
-                    <li data-filter=".design"><a href="javascript:void(0)">design</a></li>
-                    <li data-filter=".photography"><a href="javascript:void(0)">photography</a></li>
-                    <li data-filter=".architecture"><a href="javascript:void(0)">architecture</a></li>
-                </ul>
-            </div>
-            <!--filter menu end -->
 
 
             <!--social and copyright -->
@@ -301,11 +289,6 @@ if(isset($_POST['update'])){
                             <a href="#"> <i class="ion ion-social-dribbble"></i> </a>
                         </li>
                     </ul>
-                    <div class="copy_right">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </div>
                 </div>
             </div>
             <!--social and copyright end -->

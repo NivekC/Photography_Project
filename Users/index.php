@@ -7,18 +7,20 @@ if(!isset($_SESSION['username'])){
 $con = new DBConnector;
 
 $uname = $_SESSION['username'];
-$res =  mysqli_query($con->conn, "SELECT photographers.photographersID FROM `photographers` JOIN users ON users.UserID = photographers.UserID WHERE users.username = '$uname'");
+$res =  mysqli_query($con->conn, "SELECT photographers.photographersID,photographers.UserID FROM `photographers` JOIN users ON users.UserID = photographers.UserID WHERE users.username = '$uname'");
 if($res->num_rows > 0){
     while($row = $res->fetch_assoc()) {
-      $pId = $row['photographersID'];           
+      $pId = $row['photographersID']; 
+      $puid = $row['UserID'];
     }
 }
+
+
         $username = $_SESSION['username'];
         $sqls = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '$username'");
         while($row=mysqli_fetch_array($sqls)){
             $lesuserID = $row['UserID'];
-            $fname = $row['fname'];
-            $lname = $row['lname'];
+           
         }
         $dates = date("Y/m/d");
         $resBooking =  mysqli_query($con->conn, "SELECT * FROM `booking` WHERE UserID = '$lesuserID' and notification = 1") or die("Error!: ".mysqli_error($con->conn));
@@ -41,6 +43,14 @@ if($res->num_rows > 0){
 <head>
 <?php include ('../include/ihead.php'); ?>
 <link rel="stylesheet" href="../include/css/index.css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
 <style>
         .red{
             color: #ff0000;
@@ -82,19 +92,30 @@ if($res->num_rows > 0){
                                         $images = $row['photographs'];
                                         $photoID = $row['PhotographersID'];
                                         $photosID = $row['PhotographID'];
+
+                                        $sqlPhotographerDetails = "SELECT users.fname,users.lname,users.UserID FROM `photographers` JOIN users ON users.UserID = photographers.UserID WHERE photographers.PhotographersID = '$photoID'";
+                                        $sqlPhotographer = mysqli_query($con->conn,$sqlPhotographerDetails);
+                                            if($sqlPhotographer->num_rows > 0)
+                                            {
+                                                while($rows = $sqlPhotographer->fetch_assoc()) {
+                                                $fname = $rows['fname'];
+                                                $lname = $rows['lname'];
+                                                $UserID = $rows['UserID'];
+                                               }
+                                            }
                                         echo "
                                         <div class='col-md-12'>
                                             <div class='card' style='width:20rem; '>
                                                 <img src='../assets/$images' class='card-img-top'  alt='pro1' width='100%' height='300px' style='padding:10px;' ' />
                                                     <div class='card-body'>
                                                         <a href='reporting.php?photographersID=".$photoID."&photosID=".$photosID."'><i class='fa fa-warning red' style='font-size:24px;'></i></a>
-                                                        <a href='portfolio.php?photographersID=".$photoID."><button class='btn btn-primary'>View</button></a>
+                                                        <a href='portfolio.php?photographersID=".$photoID."&UserphotographersID=".$UserID."'><button class='btn btn-sm btn-primary' style='float: right;'>".$fname."</button></a>
                                                     </div>
                                             </div>
                                         </div>
                                         
                                         ";
-                                            
+                                                                        
                                         }
                                     }
                                     

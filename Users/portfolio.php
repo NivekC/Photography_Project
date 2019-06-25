@@ -1,3 +1,35 @@
+<?php
+
+session_start();
+include_once ('../DB/db.php');
+if(!isset($_SESSION['username'])){
+    header("location:../login/login.php");
+}
+$con = new DBConnector;
+$PhotographID = $_GET['photographersID'];
+$UserPhotographID = $_GET['UserphotographersID'];
+
+$sql = mysqli_query($con->conn, "SELECT * FROM `photographers`  WHERE photographersID = '$PhotographID'");
+while($row=mysqli_fetch_array($sql)){
+  
+    $bio = $row['Description'];
+}    
+
+
+
+$sql1 = mysqli_query($con->conn, "SELECT * FROM `users` WHERE UserID = '$UserPhotographID'");
+//print_r($sql1);
+while($rows=mysqli_fetch_array($sql1)){
+    $fname = $rows['fname'];
+    $lname = $rows['lname'];
+    $email = $rows['email'];
+    $username = $rows['username'];
+    $contact = $rows['contact'];
+    $prof_pic = $rows['prof_pic'];
+
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,55 +81,43 @@
             </div>
             <!--logo end-->
 
-            <!--main menu -->
-            <div class="side_menu_section">
-                    <ul class="menu_nav">
-                        <li>
-                            <a href="index.php">
-                                Gallery
-                            </a>
-                        </li>
-                        <li>
-                            <a href="about.php">
-                                About Me
-                            </a>
-                        </li>
-                        <!-- <li>
-                            <a href="services.php">
-                                Services
-                            </a>
-                        </li> -->
-                        <li class="active">
-                            <a href="portfolio.php">
-                                Bookings
-                            </a>
-                        </li>
-                        <li>
-                            <a href="profile.php">
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="contact.php">
-                                Photos
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <!--main menu end -->
-
-            <!--filter menu -->
-            <div class="side_menu_section">
-                <h4 class="side_title">filter by:</h4>
-                <ul  id="filtr-container"  class="filter_nav">
-                    <li  data-filter="*" class="active"><a href="javascript:void(0)" >all</a></li>
-                    <li data-filter=".branding"> <a href="javascript:void(0)">branding</a></li>
-                    <li data-filter=".design"><a href="javascript:void(0)">design</a></li>
-                    <li data-filter=".photography"><a href="javascript:void(0)">photography</a></li>
-                    <li data-filter=".architecture"><a href="javascript:void(0)">architecture</a></li>
+          <!--main menu -->
+          <div class="side_menu_section">
+                <ul class="menu_nav">
+                    <li class="active">
+                        <a href="index.php">
+                            Gallery
+                        </a>
+                    </li>
+                    <li>
+                        <a href="photographers.php">
+                            Photographers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.php">
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contact.php">
+                            contact
+                        </a>
+                    </li>
+                    <li>
+                        <a class="notification" class="active"  href="rating.php">
+                            <span>Ratings</span>
+                            <span class="badge"><?php if(isset($not)){if($not>=1&&$notifyValue==1){echo $not;}} ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../authenticator/logout.php">
+                            logout
+                        </a>
+                    </li>
                 </ul>
             </div>
-            <!--filter menu end -->
+            <!--main menu end -->
 
 
             <!--social and copyright -->
@@ -117,11 +137,6 @@
                             <a href="#"> <i class="ion ion-social-dribbble"></i> </a>
                         </li>
                     </ul>
-                    <div class="copy_right">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a></p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </div>
                 </div>
             </div>
             <!--social and copyright end -->
@@ -131,191 +146,95 @@
 
         <!--=================== content body ====================-->
         <div class="col-lg-10 col-md-9 col-12 body_block  align-content-center">
-            <!--=================== filter portfolio start====================-->
-            <div class="portfolio gutters grid img-container">
-                <div class="grid-sizer col-sm-12 col-md-6 col-lg-3"></div>
-                <div class="grid-item branding  col-sm-12 col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port1.png" title="project name 1">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port1.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
+            <div>
+                <div class="img_card">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 col-7 content_section">
+                            <!--=================== contact info and form start====================-->
+                            <div class="content_box">
+                                <div class="content_box_inner">
+                                    <div>
+                                        <h3>
+                                            <?php echo $fname ." ".$lname ?>
+                                        </h3>
+
+                                        <img src="<?php echo $prof_pic?>" width="250px" height="250px" alt="Picture not Available">
+
+                                        <ul class="nosyely_list pt50">
+                                            <li>
+                                                <div class="img_box_two">
+                                                    <img src="../assets/img/icons/scheme.png" alt="info list">
+                                                    <div class="content align-items-center">
+                                                        <p><h5>
+                                                        <?php echo $email?>
+                                                          </h5>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="img_box_two">
+                                                    <img src="../assets/img/icons/smartphone.png" alt="info list">
+                                                    <div class="content align-items-center">
+                                                        <p>
+                                                            <h5>
+                                                                <?php echo $contact?>
+                                                            </h5>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul><br>
+                                        <h5>
+                                            
+                                            <?php echo "<h4><b>Biography</b><h4>"; echo $bio?>
+                                        </h5><br>
+                                        <?php
+                                            $sqlServices = mysqli_query($con->conn, "SELECT * FROM `services`  WHERE photographerID = '$PhotographID'");
+                                            while($row=mysqli_fetch_array($sqlServices)){
+                                            
+                                                $category = $row['category'];
+                                                $description = $row['description'];
+                                                $minCash = $row['minCash'];
+                                                $maxCash = $row['maxCash'];
+
+                                            echo "<h5><b>".$category."</b></h5>";
+                                            echo "<h5>".$description."</h5>";
+                                            echo "<h5><b>".$maxCash."ksh  -  ".$minCash."ksh</b></h5>";
+
+                                            }
+                                        ?>
+
+                                        <?php
+                                        $sqlImages = mysqli_query($con->conn, "SELECT * FROM `gallery`  WHERE photographersID = '$PhotographID'");
+                                        while($row=mysqli_fetch_array($sqlImages)){
+                                          
+                                            $pictures = $row['photographs'];
+                                    
+                                        echo "
+                                        <div class='col-md-12'>
+                                            <div class='card' style='width:20rem; '>
+                                                <img src='$pictures' class='card-img-top'  alt='pro1' width='100%' height='300px' style='padding:10px;' ' />
+                                                    <div class='card-body'>
+                                                       
+                                        
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        
+                                        ";
+                                        }?>
+
+                
                                     </div>
                                 </div>
                             </div>
+                            <!--=================== contact info and form end====================-->
                         </div>
-                    </a>
-                </div>
-                <div class="grid-item  branding architecture  col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port2.png" title="project name 2">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port2.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="grid-item  design col-sm-12 col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port3.png" title="project name 5">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port3.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="grid-item  photography design col-sm-12 col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port4.png" title="project name 5">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port4.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="grid-item  branding photography  col-sm-12 col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port5.png" title="project name 5">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port5.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="grid-item   architecture design col-sm-12 col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port6.png" title="project name 5">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port6.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="grid-item  photography architecture col-sm-12 col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port7.png" title="project name 5">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port7.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="grid-item  branding design  col-sm-12 col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port8.png" title="project name 5">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port8.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="grid-item architecture  col-sm-12 col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port9.png" title="project name 4">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port9.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="grid-item  photography architecture col-sm-12 col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port10.png" title="project name 5">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port10.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="grid-item  branding design  col-sm-12 col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port11.png" title="project name 5">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port11.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="grid-item architecture  col-sm-12 col-md-6 col-lg-3">
-                    <a href="../assets/img/portfolio/port4.png" title="project name 4">
-                        <div class="project_box_one">
-                            <img src="../assets/img/portfolio/port4.png" alt="pro1" />
-                            <div class="product_info">
-                                <div class="product_info_text">
-                                    <div class="product_info_text_inner">
-                                        <i class="ion ion-plus"></i>
-                                        <h4>project name</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                        <div class="col-md-6 col-5 img_section" style="background-image: url('../assets/img/bg/service_bg.png');"></div>
+                    </div>
                 </div>
             </div>
-            <!--=================== filter portfolio end====================-->
         </div>
         <!--=================== content body end ====================-->
     </div>

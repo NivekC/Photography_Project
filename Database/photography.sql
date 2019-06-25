@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 25, 2019 at 04:37 PM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 7.1.7
+-- Generation Time: Jun 25, 2019 at 07:17 PM
+-- Server version: 10.1.40-MariaDB
+-- PHP Version: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -46,7 +46,8 @@ CREATE TABLE `booking` (
 INSERT INTO `booking` (`bookID`, `date`, `venue`, `category`, `photographerID`, `UserID`, `notification`, `approved`) VALUES
 (14, '2013-08-03', 'Nairobi', 'Birthday shoots', 1, 1, 0, 0),
 (16, '2019-06-26', 'Strathmore', 'Photoshoot', 1, 5, 1, 0),
-(17, '2019-06-24', 'Eldoret', 'Wedding shoot', 2, 1, 0, 0);
+(17, '2019-06-24', 'Eldoret', 'Wedding shoot', 2, 1, 0, 0),
+(18, '2019-07-30', 'Runda', 'Solo Shoot', 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -82,20 +83,21 @@ CREATE TABLE `gallery` (
 --
 
 INSERT INTO `gallery` (`photographID`, `photographs`, `Category`, `photographersID`, `status`) VALUES
-(1, '../assets/upload/1d466b1bebbe7e293fc005bb30e21b9f.jpg', 'Birthday shoots', 1, 0),
-(2, '../assets/upload/1f0448be4453c1aec39c5b19df401945.jpg', 'Birthday shoots', 1, 0),
-(3, '../assets/upload/07a7a9acea709bca67dace9bd82e6e1f.jpg', 'Birthday shoots', 1, 0),
-(4, '../assets/upload/1f0448be4453c1aec39c5b19df401945.jpg', 'Baby shoots', 1, 0),
-(5, '../assets/upload/07a7a9acea709bca67dace9bd82e6e1f.jpg', 'Baby shoots', 1, 0),
-(6, '../assets/upload/09f5568b6b5ff1188aa66e3946f2033f.jpg', 'Baby shoots', 1, 0),
-(7, '../assets/upload/21ce8936770ca22f5738632bb124c9e3.jpg', 'Baby shoots', 1, 1),
-(8, '../assets/upload/45feb0499d7cd4d0465f64b35acf37f0.jpg', 'Baby shoots', 1, 0),
-(9, '../assets/upload/970665a97253d520e7d8b466c6474070.jpg', 'Event', 1, 0),
+(1, '../assets/upload/4k-wallpaper-adorable-blur-1148998.jpg', 'Birthday shoots', 1, 0),
+(2, '../assets/upload/adorable-baby-child-356192.jpg', 'Birthday shoots', 1, 0),
+(3, '../assets/upload/adult-art-artistic-917594.jpg', 'Birthday shoots', 1, 0),
+(4, '../assets/upload/afro-beautiful-child-1068205.jpg', 'Baby shoots', 1, 0),
+(5, '../assets/upload/art-artistic-blue-eyes-1209843.jpg', 'Baby shoots', 1, 0),
+(6, '../assets/upload/art-artsy-backlit-595747.jpg', 'Baby shoots', 1, 0),
+(7, '../assets/upload/art-celebration-closed-eyes-1937301.jpg', 'Baby shoots', 1, 0),
+(8, '../assets/upload/art-dark-ethnic-1038041.jpg', 'Baby shoots', 1, 0),
+(9, '../assets/upload/attachment-baby-boy-1027931.jpg', 'Event', 1, 0),
 (10, '../assets/upload/clown.jpg', 'Birthday shoots', 2, 0),
-(11, '../assets/upload/moon_and_ocean-wallpaper-1366x768.jpg', 'Nature', 2, 0),
-(12, '../assets/upload/planet_green_nature_space_leaves_tree_84720_1920x1080.jpg', 'Nature', 2, 0),
-(13, '../assets/upload/red_sky_big_sun_set-wallpaper-1366x768.jpg', 'Nature', 2, 0),
-(14, '../assets/upload/trees_field_two_fog_forest_evening_94478_1920x1080.jpg', 'Nature', 2, 0);
+(11, '../assets/upload/blurred-background-boy-child-1416736.jpg', 'Nature', 2, 0),
+(12, '../assets/upload/child-girl-little-36483.jpg', 'Nature', 2, 0),
+(13, '../assets/upload/ancient-arch-arch-bridge-507410.jpg', 'Nature', 2, 0),
+(14, '../assets/upload/animal-photography-daylight-elephant-247431.jpg', 'Nature', 2, 0),
+(15, '../assets/upload/adults-africa-colorful-667200.jpg', 'Art', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -115,7 +117,7 @@ CREATE TABLE `photographers` (
 
 INSERT INTO `photographers` (`photographersID`, `UserID`, `Description`) VALUES
 (1, 2, '\r\nBorn in Bondo, grew up in Nairobi, kenya.  I tour the country to spread love through photography.\r\n\r\nMy goal is to show the beauty, grace, strength and enthusiasm of people. I focus on non-models and place regular people in exaggerated situations that highlight an aspect of who they are. I look for a sense of defiance and fortitude in my work.\r\n\r\nIâ€™m based in Nairobi but travel for projects around the country.'),
-(2, 3, '');
+(2, 3, 'I am an editorial and commercial photographer, specializing in people and corporate photography with a style consisting of colorful and energetic imagery. Running a client-friendly, service-oriented business he believes that great creativity often is the result of team effort and values working closely with his clients. Based in Jacksonville Beach, Florida Ryan and his team are ready to create outstanding visuals for you.');
 
 -- --------------------------------------------------------
 
@@ -135,7 +137,8 @@ CREATE TABLE `rating` (
 --
 
 INSERT INTO `rating` (`RatingID`, `ratingStars`, `comments`, `photographerID`) VALUES
-(1, 5, 'It was an awesome experience working with him.', 2);
+(1, 5, 'It was an awesome experience working with him.', 2),
+(2, 5, 'He is a very good photographer', 1);
 
 -- --------------------------------------------------------
 
@@ -161,7 +164,8 @@ INSERT INTO `reports` (`ReportID`, `title`, `description`, `date`, `photographer
 (2, 'Racism', 'Lonely together', '2019-06-04 23:35:45', 1, 8, 0),
 (3, 'weird looks ', 'sad', '2019-06-25 06:45:50', 2, 10, 0),
 (4, 'Racism', 'The photograph encourages racism.', '2019-06-25 10:13:38', 1, 5, 0),
-(5, 'Offensive', 'I dont wish to see it', '2019-06-25 10:42:07', 1, 7, 0);
+(5, 'Offensive', 'I dont wish to see it', '2019-06-25 10:42:07', 1, 7, 0),
+(6, 'Not appropriate', 'I did not like what the picture depicted', '2019-06-25 20:00:01', 1, 10, 0);
 
 -- --------------------------------------------------------
 
@@ -216,7 +220,7 @@ INSERT INTO `users` (`UserID`, `fname`, `lname`, `username`, `password`, `email`
 (3, 'Jane', 'Doe', 'jane', '$2y$10$D6qYB5/989SgEiJ24ye01uSCfYas.irn.VDiTFSY/wj5JwozlOvLy', 'janedoe@gmail.com', '0702805215', '../assets/upload/Aoki.jpg', 3, 1),
 (4, 'john', 'doe', 'john', '$2y$10$jrkkwfnpI7rEKaAevbdddeKNuIXg7au1IpuagoUDDihiwL5tqDn2C', 'johndoe@gmail.com', '0774010328', '../assets/upload/avicii.png', 2, 1),
 (5, 'mistah', 'Mboya', 'mistah', '$2y$10$reRtvM71JAtdmC9O4d4mle76upUCJid1rPN3TmirvYg75cyIhQ3D.', 'michael.mboya@strathmore.edu', '0799529328', '../assets/upload/AW.jpg', 2, 1),
-(6, 'admin', 'admin', 'admin', '$2y$10$uzMVKM/glQaLUJEoySQyz.g.iTaIFQEcMnXzdiNqXT8a9rNskppIe', 'admin123@gmail.com', '0714253674', '../assets/upload/AviciiIcon.jpg', 1, 1),
+(6, 'admin', 'admin', 'admin', '$2y$10$uzMVKM/glQaLUJEoySQyz.g.iTaIFQEcMnXzdiNqXT8a9rNskppIe', 'newton.amani@strathmore.edu', '0714253674', '../assets/upload/AviciiIcon.jpg', 1, 1),
 (8, 'Google', 'Play', 'google', '$2y$10$bJJiG2uyVB8YpAKuIZkode7IYHMY/hUhni9bZVcys/BTJSVrd4Y0e', 'googleplay@gmail.com', '0714253663', '../assets/upload/hardwell.jpg', 2, 1),
 (11, 'Test', 'Admin', 'Test', '$2y$10$mdvp2npLr8FXbazqeMU6c.VGfFaU4mW4RZxxbPo23A0e9PtI6vk72', 'test@123.com', '0789654123', '../assets/upload/martinG.jpg', 4, 1);
 
@@ -289,42 +293,50 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `bookID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `bookID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
   MODIFY `EventID` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
-  MODIFY `photographID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `photographID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
 --
 -- AUTO_INCREMENT for table `photographers`
 --
 ALTER TABLE `photographers`
   MODIFY `photographersID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `RatingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `RatingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
   MODIFY `serviceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- Constraints for dumped tables
 --

@@ -39,7 +39,7 @@ if(isset($_POST['update'])){
                 $photographerID = $row['photographerID'];
                 $Bdate = $row['date']; 
                 $notifyValue = $row['notification'];   
-              if($Bdate<$dates)
+                if(strtotime($Bdate)<strtotime($dates))
                 {
                     $not++;
                 }    

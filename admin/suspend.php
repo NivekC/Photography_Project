@@ -10,6 +10,71 @@ if (!isset($_SESSION['username'])){
     if(isset($_GET['sus'])){
         mysqli_query($con->conn,"update users set active = 1 where UserID = '".$_GET['id']."'");
         $_SESSION['msg'] = "Account has been restored";
+
+        $UserID = $_GET['id'];
+        $sqlUser = mysqli_query($con->conn, "SELECT * FROM `users` WHERE UserID = '$UserID'");
+        while($row=mysqli_fetch_array($sqlUser)){
+            $fname = $row['fname'];
+            $lname = $row['lname'];
+            $email = $row['email'];
+            $contact = $row['contact']; 
+            }
+        $sqlAdmin = mysqli_query($con->conn, "SELECT * FROM `users` WHERE username = '".$_SESSION['username']."'");
+        while($row=mysqli_fetch_array($sqlAdmin)){
+            $emailAdmin = $row['email'];
+            $contactAdmin = $row['contact']; 
+            }    
+
+            $string = "+254". $contact; 
+            $recipients = $string; 
+
+            $body = "Your account ban has just been lifted. Sorry for any inconvenience caused.";
+
+          // Be sure to include the file you've just downloaded
+          require_once('AfricasTalkingGateway.php');
+          // Specify your authentication credentials
+          $username   = "bloodorgan";
+          $apikey     = "8a62463cde8793afb7b02a417334a81962e17ccd3c81a7254db1b656f6681835";
+          // Specify the numbers that you want to send to in a comma-separated list
+          // Please ensure you include the country code (+254 for Kenya in this case)
+
+            $body = $body . "\r\n". "If you wish to reply, please reply with the options below.". "\r\nPhone Number: ". $contactAdmin . "\r\nEmail Address: ". $emailAdmin;        
+
+           // /var_dump($recipients);
+          // And of course we want our recipients to know what we really do
+          $message    = $body;
+          // Create a new instance of our awesome gateway class
+          $gateway    = new AfricasTalkingGateway($username, $apikey);
+          /*************************************************************************************
+            NOTE: If connecting to the sandbox:
+            1. Use "sandbox" as the username
+            2. Use the apiKey generated from your sandbox application
+               https://account.africastalking.com/apps/sandbox/settings/key
+            3. Add the "sandbox" flag to the constructor
+            $gateway  = new AfricasTalkingGateway($username, $apiKey, "sandbox");
+          **************************************************************************************/
+          // Any gateway error will be captured by our custom Exception class below, 
+          // so wrap the call in a try-catch block
+          try 
+          { 
+            // Thats it, hit send and we'll take care of the rest. 
+            $results = $gateway->sendMessage($recipients, $message);
+                      
+            foreach($results as $result2) {
+              // status is either "Success" or "error message"
+              echo " Number: " .$result2->number;
+              echo " Status: " .$result2->status;
+              echo " StatusCode: " .$result2->statusCode;
+              echo " MessageId: " .$result2->messageId;
+              echo " Cost: "   .$result2->cost."\n";
+              header("location: home.php");
+            }
+          }
+          catch ( AfricasTalkingGatewayException $e )
+          {
+             echo "Encountered an error while sending: ".$e->getMessage();
+          }
+
     }
     if (isset($_GET['del'])){
         mysqli_query($con->conn,"delete from users where UserId = '".$_GET['id']."'");

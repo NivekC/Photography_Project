@@ -33,7 +33,8 @@ if(!isset($_SESSION['username']))
                 $lname = $row['lname'];
                 $email = $row['email'];
                 $username = $row['username'];
-                $contact = $row['contact'];           
+                $contact = $row['contact'];  
+                $prof_pic = $row['prof_pic'];         
             }
         }
         }
@@ -301,12 +302,12 @@ if(isset($UserID)){
     <div class="box">
         <div class="img">
 
-            <img class="card-img-top img" src="../assets/upload/avatar.jpg" width="300" height="400" alt="Card image cap">
+            <img class="card-img-top img" src="'.$prof_pic.'" width="300" height="400" alt="Card image cap">
           </div>
             <hr>
             <h4 class ="card-title">'.$fname." ". $lname.'</h4>
             <div class="contents">
-               <p class="card-text">Phone number: 0'.$contact.'</p>
+               <p class="card-text">Phone number: '.$contact.'</p>
               <p class="card-text">Email:  '.$email.'</p>
               <button type="button"  class="btn btn-sm btn-success" data-toggle="modal" data-target="'."#" . $UserID.'"  >Details</button>
             </div>
@@ -327,7 +328,7 @@ if(isset($UserID)){
     </div>
     <div class="modal-body">
       <div class="center-block col-sm-12" style = "position:center;.">
-            <img src="../assets/upload/avatar.jpg" width="200" class= "details img-responsive">
+            <img src="'.$prof_pic.'" width="200" class="details img-responsive">
           </div>
           <div class="col-sm-12">
           <h4>'.$fname." ". $lname.'</h4>
@@ -336,7 +337,7 @@ if(isset($UserID)){
           <p>Category: '.$category.'</p>
           <hr>
             <p>Email:  '.$email.'<a href="emailBooking.php?userID='.$UserID.'"><button class="btn btn-sm btn-primary">contact</button></a></p>
-            <p>Phone number:  0'. $contact.'<a href="smsBooking.php?userID='. $UserID.'"><button class="btn btn-sm btn-primary">contact</button></p>
+            <p>Phone number:  '. $contact.'<a href="smsBooking.php?userID='. $UserID.'"><button class="btn btn-sm btn-primary">contact</button></p>
            </div>
     </div>
     <div class="modal-footer">

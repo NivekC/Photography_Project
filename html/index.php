@@ -73,8 +73,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="blog.html">
-                            Photographers
+                        <a href="../Authenticator/login.php">
+                            Login
                         </a>
                     </li>
                     <li>

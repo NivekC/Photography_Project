@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2019 at 11:56 PM
--- Server version: 10.1.40-MariaDB
--- PHP Version: 7.3.5
+-- Generation Time: Jun 25, 2019 at 04:37 PM
+-- Server version: 10.1.25-MariaDB
+-- PHP Version: 7.1.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -44,9 +44,9 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`bookID`, `date`, `venue`, `category`, `photographerID`, `UserID`, `notification`, `approved`) VALUES
-(14, '2018-08-03', 'Nairobi', 'Birthday shoots', 1, 1, 0, 0),
-(16, '2019-01-29', 'Strathmore', 'Photoshoot', 1, 5, 0, 0),
-(17, '2019-05-29', 'Eldoret', 'Wedding shoot', 2, 1, 0, 0);
+(14, '2013-08-03', 'Nairobi', 'Birthday shoots', 1, 1, 0, 0),
+(16, '2019-06-26', 'Strathmore', 'Photoshoot', 1, 5, 1, 0),
+(17, '2019-06-24', 'Eldoret', 'Wedding shoot', 2, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -73,28 +73,29 @@ CREATE TABLE `gallery` (
   `photographID` int(11) NOT NULL,
   `photographs` varchar(255) NOT NULL,
   `Category` varchar(40) NOT NULL,
-  `photographersID` int(11) NOT NULL
+  `photographersID` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `gallery`
 --
 
-INSERT INTO `gallery` (`photographID`, `photographs`, `Category`, `photographersID`) VALUES
-(1, 'upload/1d466b1bebbe7e293fc005bb30e21b9f.jpg', 'Birthday shoots', 1),
-(2, 'upload/1f0448be4453c1aec39c5b19df401945.jpg', 'Birthday shoots', 1),
-(3, 'upload/07a7a9acea709bca67dace9bd82e6e1f.jpg', 'Birthday shoots', 1),
-(4, 'upload/1f0448be4453c1aec39c5b19df401945.jpg', 'Baby shoots', 1),
-(5, 'upload/07a7a9acea709bca67dace9bd82e6e1f.jpg', 'Baby shoots', 1),
-(6, 'upload/09f5568b6b5ff1188aa66e3946f2033f.jpg', 'Baby shoots', 1),
-(7, 'upload/21ce8936770ca22f5738632bb124c9e3.jpg', 'Baby shoots', 1),
-(8, 'upload/45feb0499d7cd4d0465f64b35acf37f0.jpg', 'Baby shoots', 1),
-(9, 'upload/970665a97253d520e7d8b466c6474070.jpg', 'Event', 1),
-(10, 'upload/clown.jpg', 'Birthday shoots', 2),
-(11, '../assets/upload/moon_and_ocean-wallpaper-1366x768.jpg', 'Nature', 2),
-(12, '../assets/upload/planet_green_nature_space_leaves_tree_84720_1920x1080.jpg', 'Nature', 2),
-(13, '../assets/upload/red_sky_big_sun_set-wallpaper-1366x768.jpg', 'Nature', 2),
-(14, '../assets/upload/trees_field_two_fog_forest_evening_94478_1920x1080.jpg', 'Nature', 2);
+INSERT INTO `gallery` (`photographID`, `photographs`, `Category`, `photographersID`, `status`) VALUES
+(1, '../assets/upload/1d466b1bebbe7e293fc005bb30e21b9f.jpg', 'Birthday shoots', 1, 0),
+(2, '../assets/upload/1f0448be4453c1aec39c5b19df401945.jpg', 'Birthday shoots', 1, 0),
+(3, '../assets/upload/07a7a9acea709bca67dace9bd82e6e1f.jpg', 'Birthday shoots', 1, 0),
+(4, '../assets/upload/1f0448be4453c1aec39c5b19df401945.jpg', 'Baby shoots', 1, 0),
+(5, '../assets/upload/07a7a9acea709bca67dace9bd82e6e1f.jpg', 'Baby shoots', 1, 0),
+(6, '../assets/upload/09f5568b6b5ff1188aa66e3946f2033f.jpg', 'Baby shoots', 1, 0),
+(7, '../assets/upload/21ce8936770ca22f5738632bb124c9e3.jpg', 'Baby shoots', 1, 1),
+(8, '../assets/upload/45feb0499d7cd4d0465f64b35acf37f0.jpg', 'Baby shoots', 1, 0),
+(9, '../assets/upload/970665a97253d520e7d8b466c6474070.jpg', 'Event', 1, 0),
+(10, '../assets/upload/clown.jpg', 'Birthday shoots', 2, 0),
+(11, '../assets/upload/moon_and_ocean-wallpaper-1366x768.jpg', 'Nature', 2, 0),
+(12, '../assets/upload/planet_green_nature_space_leaves_tree_84720_1920x1080.jpg', 'Nature', 2, 0),
+(13, '../assets/upload/red_sky_big_sun_set-wallpaper-1366x768.jpg', 'Nature', 2, 0),
+(14, '../assets/upload/trees_field_two_fog_forest_evening_94478_1920x1080.jpg', 'Nature', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -129,6 +130,13 @@ CREATE TABLE `rating` (
   `photographerID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `rating`
+--
+
+INSERT INTO `rating` (`RatingID`, `ratingStars`, `comments`, `photographerID`) VALUES
+(1, 5, 'It was an awesome experience working with him.', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -150,7 +158,10 @@ CREATE TABLE `reports` (
 --
 
 INSERT INTO `reports` (`ReportID`, `title`, `description`, `date`, `photographerID`, `photographsID`, `view`) VALUES
-(2, 'Racism', 'Lonely together', '2019-06-04 23:35:45', 1, 8, 0);
+(2, 'Racism', 'Lonely together', '2019-06-04 23:35:45', 1, 8, 0),
+(3, 'weird looks ', 'sad', '2019-06-25 06:45:50', 2, 10, 0),
+(4, 'Racism', 'The photograph encourages racism.', '2019-06-25 10:13:38', 1, 5, 0),
+(5, 'Offensive', 'I dont wish to see it', '2019-06-25 10:42:07', 1, 7, 0);
 
 -- --------------------------------------------------------
 
@@ -200,14 +211,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`UserID`, `fname`, `lname`, `username`, `password`, `email`, `contact`, `prof_pic`, `access_level`, `active`) VALUES
-(1, 'Isaac', 'Kiplel', 'isaac', '$2y$10$43GKopjpn50G3o8sRy/2cOW6er.0xfRF8zJuLRafDHygHQB6b.Pgi', 'kiplelisaac@gmail.com', '0707088150', 'upload/amani.jpg', 2, 1),
-(2, 'Amani', 'Newton', 'amani', '$2y$10$S3qxFQMB/10fFhdzWiMGF.cWQ3tRHGfoNsv4yyTaDP62Fk8v18jd.', 'amani@gmail.com', '0774010328', 'upload/amani.jpg', 3, 1),
-(3, 'Jane', 'Doe', 'jane', '$2y$10$D6qYB5/989SgEiJ24ye01uSCfYas.irn.VDiTFSY/wj5JwozlOvLy', 'janedoe@gmail.com', '0702805215', '', 3, 1),
-(4, 'john', 'doe', 'john', '$2y$10$jrkkwfnpI7rEKaAevbdddeKNuIXg7au1IpuagoUDDihiwL5tqDn2C', 'johndoe@gmail.com', '0774010328', '', 2, 1),
-(5, 'mistah', 'Mboya', 'mistah', '$2y$10$reRtvM71JAtdmC9O4d4mle76upUCJid1rPN3TmirvYg75cyIhQ3D.', 'michael.mboya@strathmore.edu', '0799529328', '', 2, 1),
-(6, 'admin', 'admin', 'admin', '$2y$10$uzMVKM/glQaLUJEoySQyz.g.iTaIFQEcMnXzdiNqXT8a9rNskppIe', 'admin123@gmail.com', '0714253674', '', 1, 1),
-(8, 'Google', 'Play', 'google', '$2y$10$bJJiG2uyVB8YpAKuIZkode7IYHMY/hUhni9bZVcys/BTJSVrd4Y0e', 'googleplay@gmail.com', '0714253663', '', 2, 0),
-(11, 'Test', 'Admin', 'Test', '$2y$10$mdvp2npLr8FXbazqeMU6c.VGfFaU4mW4RZxxbPo23A0e9PtI6vk72', 'test@123.com', '0789654123', '', 4, 1);
+(1, 'Isaac', 'Kiplel', 'isaac', '$2y$10$43GKopjpn50G3o8sRy/2cOW6er.0xfRF8zJuLRafDHygHQB6b.Pgi', 'kiplelisaac@gmail.com', '0707088150', '../assets/upload/shm.jpg', 2, 1),
+(2, 'Amani', 'Newton', 'amani', '$2y$10$S3qxFQMB/10fFhdzWiMGF.cWQ3tRHGfoNsv4yyTaDP62Fk8v18jd.', 'amani@gmail.com', '0774010328', '../assets/upload/amani.jpg', 3, 1),
+(3, 'Jane', 'Doe', 'jane', '$2y$10$D6qYB5/989SgEiJ24ye01uSCfYas.irn.VDiTFSY/wj5JwozlOvLy', 'janedoe@gmail.com', '0702805215', '../assets/upload/Aoki.jpg', 3, 1),
+(4, 'john', 'doe', 'john', '$2y$10$jrkkwfnpI7rEKaAevbdddeKNuIXg7au1IpuagoUDDihiwL5tqDn2C', 'johndoe@gmail.com', '0774010328', '../assets/upload/avicii.png', 2, 1),
+(5, 'mistah', 'Mboya', 'mistah', '$2y$10$reRtvM71JAtdmC9O4d4mle76upUCJid1rPN3TmirvYg75cyIhQ3D.', 'michael.mboya@strathmore.edu', '0799529328', '../assets/upload/AW.jpg', 2, 1),
+(6, 'admin', 'admin', 'admin', '$2y$10$uzMVKM/glQaLUJEoySQyz.g.iTaIFQEcMnXzdiNqXT8a9rNskppIe', 'admin123@gmail.com', '0714253674', '../assets/upload/AviciiIcon.jpg', 1, 1),
+(8, 'Google', 'Play', 'google', '$2y$10$bJJiG2uyVB8YpAKuIZkode7IYHMY/hUhni9bZVcys/BTJSVrd4Y0e', 'googleplay@gmail.com', '0714253663', '../assets/upload/hardwell.jpg', 2, 1),
+(11, 'Test', 'Admin', 'Test', '$2y$10$mdvp2npLr8FXbazqeMU6c.VGfFaU4mW4RZxxbPo23A0e9PtI6vk72', 'test@123.com', '0789654123', '../assets/upload/martinG.jpg', 4, 1);
 
 --
 -- Indexes for dumped tables
@@ -279,49 +290,41 @@ ALTER TABLE `users`
 --
 ALTER TABLE `booking`
   MODIFY `bookID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
 --
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
   MODIFY `EventID` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
   MODIFY `photographID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
 --
 -- AUTO_INCREMENT for table `photographers`
 --
 ALTER TABLE `photographers`
   MODIFY `photographersID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `rating`
 --
 ALTER TABLE `rating`
-  MODIFY `RatingID` int(11) NOT NULL AUTO_INCREMENT;
-
+  MODIFY `RatingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `ReportID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
   MODIFY `serviceID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
 --
 -- Constraints for dumped tables
 --

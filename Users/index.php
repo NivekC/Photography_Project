@@ -27,7 +27,7 @@ if($res->num_rows > 0){
                 $photographerID = $row['photographerID'];
                 $Bdate = $row['date']; 
                 $notifyValue = $row['notification'];   
-              if($Bdate<$dates){
+                if(strtotime($Bdate)<strtotime($dates)){
                     $not++;
                 }    
             }
@@ -64,8 +64,10 @@ if($res->num_rows > 0){
                         <div class="row">
                             <div class='card-columns'">
                                 <?php 
-                                $ssql = "SELECT PhotographID,photographs,Category,PhotographersID FROM `gallery` ORDER BY RAND() LIMIT 30;";
+                                $ssql = "SELECT PhotographID,photographs,Category,PhotographersID,`status` FROM `gallery` WHERE `status` = 0 ORDER BY RAND() LIMIT 30";
+                                
                                 $sql = mysqli_query($con->conn,$ssql);
+                                //print_r($sql);
                                     if($sql->num_rows > 0)
                                     {
                                         while($row = $sql->fetch_assoc()) {

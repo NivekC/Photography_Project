@@ -29,7 +29,7 @@ if(isset($_POST['update'])){
                 $photographerID = $row['photographerID'];
                 $Bdate = $row['date']; 
                 $notifyValue = $row['notification'];   
-              if($Bdate<$dates)
+              if(strtotime($Bdate)<strtotime($dates))
                 {
                     $not++;
                     
@@ -52,9 +52,9 @@ if(isset($_POST['saveReview']))
     $ratingNo = $_POST['ratings'];
     $comments = $_POST['comment'];
     $BID = $_POST['bookid'];
-    $rate = "INSERT INTO `rating`(`ratingStars`, `comments`, `photographID`) VALUES ('$ratingNo','$comments','$pId')";
+    $rate = "INSERT INTO `rating`(`ratingStars`, `comments`, `photographerID`) VALUES ('$ratingNo','$comments','$pId')";
     
-    $resRating =  mysqli_query($con->conn, "INSERT INTO `rating`(`ratingStars`, `comments`, `photographID`) VALUES ('$ratingNo','$comments','$pId')") or die("Error!: ".mysqli_error($con->conn));
+    $resRating =  mysqli_query($con->conn, "INSERT INTO `rating`(`ratingStars`, `comments`, `photographerID`) VALUES ('$ratingNo','$comments','$pId')") or die("Error!: ".mysqli_error($con->conn));
     $resNotification = mysqli_query($con->conn, "UPDATE `booking` SET `notification` = 0 WHERE `booking`.`bookID` = '$BID'");
     if($resRating && $resNotification)
     {

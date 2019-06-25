@@ -19,19 +19,56 @@ if(isset($_POST['signup'])){
 		$pass = password_hash($password,PASSWORD_DEFAULT);
 		echo $pass;
 		if($category=="User"){
-			$sql = mysqli_query($con->conn, "INSERT INTO `users`(`fname`, `lname`, `username`, `password`, `email`, `contact`, `access_level`, `active`) VALUES ('$fname','$lname','$username','$pass','$email','$contact',2,1)");
-			echo "its a success";
-			header("location:../login/login.php");
-		} else {
-			$sql = mysqli_query($con->conn, "INSERT INTO `users`(`fname`, `lname`, `username`, `password`, `email`, `contact`, `access_level`, `active`) VALUES ('$fname','$lname','$username','$pass','$email','$contact',3,1)");
-			$sql1 = mysqli_query($con->conn, "SELECT UserID FROM `users` WHERE username = '$username'");
-			while($row=mysqli_fetch_array($sql1)){
-				$UserID = $row['UserID'];
+
+			$target_dir = '../assets/upload/';
+			$total_files = count($_FILES['fileToUpload']['name']);
+			
+			for($key = 0; $key < $total_files; $key++) {
+				
+				// Check if file is selected
+				
+				$original_filename = $_FILES['fileToUpload']['name'][$key];
+				$target = $target_dir . basename($original_filename);
+				$tmp  = $_FILES['fileToUpload']['tmp_name'][$key];
+				$sql = mysqli_query($con->conn, "INSERT INTO `users`(`fname`, `lname`, `username`, `password`, `email`, `contact`,`prof_pic` ,`access_level`, `active`) VALUES ('$fname','$lname','$username','$pass','$email','$contact','$target',2,1)");
+				echo "its a success";
+				$sql = mysqli_query($con->conn,$sql);
+				$uploadIMG = move_uploaded_file($tmp, $target);
+				if($sql === true && $uploadIMG === true){
+					echo "Twaz Successfull";
+					header("location:../Authenticator/login.php");
+			}
 		}
-		$res = mysqli_query($con->conn, "INSERT INTO `photographers`(`UserID`) VALUES ('$UserID')");
-		echo "its a success";
+		} else {
+
+			$target_dir = '../assets/upload/';
+			$total_files = count($_FILES['fileToUpload']['name']);
+			 
+			for($key = 0; $key < $total_files; $key++) {
+				
+				// Check if file is selected
+				
+				$original_filename = $_FILES['fileToUpload']['name'][$key];
+				$target = $target_dir . basename($original_filename);
+				$tmp  = $_FILES['fileToUpload']['tmp_name'][$key];
+				$sql = mysqli_query($con->conn, "INSERT INTO `users`(`fname`, `lname`, `username`, `password`, `email`, `contact`,`prof_pic`, `access_level`, `active`) VALUES ('$fname','$lname','$username','$pass','$email','$contact','$target',3,1)");
+				$sql1 = mysqli_query($con->conn, "SELECT UserID FROM `users` WHERE username = '$username'");
+				while($row=mysqli_fetch_array($sql1)){
+					$UserID = $row['UserID'];
+				}
+				$sql = mysqli_query($con->conn,$sql);
+				$uploadIMG = move_uploaded_file($tmp, $target);
+				if($sql === true && $uploadIMG === true){
+					echo "Twaz Successfull";
+					header('location:index.php');
+				
+				}
+				
+			}
+				
 		}
 	}
+	
 }
 	   
 ?>
@@ -99,6 +136,18 @@ if(isset($_POST['signup'])){
 									</label>
 							</div>
 						</div>
+						<div class="flex-m w-full p-b-33">
+							<div class="contact100-form-checkbox">
+								<div class="custom-file">
+								<span class="focus-input100"></span>
+									<input type="file" class="custom-file-input" name="fileToUpload[]" id="inputGroupFile01"
+									aria-describedby="inputGroupFileAddon01" >
+									<label class="custom-file-label" for="inputGroupFile01">Upload Profile</label>
+									<span class="focus-input100"></span>
+								</div>
+							</div>
+						</div>
+						
 						<div class="container-login100-form-btn">
 							<div class="wrap-login100-form-btn">
 								<div class="login100-form-bgbtn"></div>

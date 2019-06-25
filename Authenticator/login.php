@@ -14,7 +14,10 @@ if(isset($_POST['login'])){
 	while($row=mysqli_fetch_array($res)){
 		if(password_verify($password,$row['password']) && $username == $row['username']){
 			if ($row['active'] == 0){
-				echo "Account has been suspended due to violation on policy! Please contact administrator";
+				echo '<script language="javascript">';
+				echo 'confirm("Account has been suspended due to violation on policy! Please contact administrator")';
+				echo '</script>';
+				//echo "Account has been suspended due to violation on policy! Please contact administrator";
 			} else {
 			if($row['access_level'] == 1){
 				header('location:../admin/home.php');

@@ -30,7 +30,7 @@
                 $photographerID = $row['photographerID'];
                 $Bdate = $row['date']; 
                 $notifyValue = $row['notification'];   
-              if($Bdate<$dates)
+              if(strtotime($Bdate)<strtotime($dates))
                 {
                     $not++;
                 }    
@@ -43,6 +43,7 @@
         $title = $_POST['title'];
         $reason = $_POST['reason'];
         $sqlReport = mysqli_query($con->conn,"INSERT INTO `reports`(`title`, `description`,`photographerID`, `photographsID`) VALUES ('$title','$reason','$photographerID','$PhotographID')");
+        $sqlStatus = mysqli_query($con->conn,"UPDATE `gallery` SET `status`= 1 WHERE photographID = '$PhotographID'");
         
         if($sqlReport){
             header('location:index.php');

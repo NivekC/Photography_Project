@@ -205,25 +205,7 @@ while($rows=mysqli_fetch_array($sql1)){
                                             }
                                         ?>
 
-                                        <?php
-                                        $sqlImages = mysqli_query($con->conn, "SELECT * FROM `gallery`  WHERE photographersID = '$PhotographID'");
-                                        while($row=mysqli_fetch_array($sqlImages)){
-                                          
-                                            $pictures = $row['photographs'];
-                                    
-                                        echo "
-                                        <div class='col-md-12'>
-                                            <div class='card' style='width:20rem; '>
-                                                <img src='$pictures' class='card-img-top'  alt='pro1' width='100%' height='300px' style='padding:10px;' ' />
-                                                    <div class='card-body'>
-                                                       
-                                        
-                                                    </div>
-                                            </div>
-                                        </div>
-                                        
-                                        ";
-                                        }?>
+                                       
 
                 
                                     </div>

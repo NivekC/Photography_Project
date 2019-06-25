@@ -69,7 +69,7 @@ if($res->num_rows > 0){
                 <div class="container-fluid">
                     <div class="container">
                         <div class="row">
-                            <div class='card-columns'">
+                            <div class='card-columns'>
                                 <?php 
                                 $ssql = "SELECT PhotographID,photographs,Category,PhotographersID,`status` FROM `gallery` WHERE `status` = 0 ORDER BY RAND() LIMIT 30";
                                 

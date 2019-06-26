@@ -105,13 +105,16 @@ if($res->num_rows > 0){
                                             }
                                         echo "
                                         <div class='col-md-12'>
+                                        <a href='$images' title='project name 1'>
                                             <div class='card' style='width:20rem; '>
                                                 <img src='../assets/$images' class='card-img-top'  alt='pro1' width='100%' height='300px' style='padding:10px;' ' />
                                                     <div class='card-body'>
-                                                        <a href='reporting.php?photographersID=".$photoID."&photosID=".$photosID."'><i class='fa fa-warning red' style='font-size:24px;'></i></a>
-                                                        <a href='portfolio.php?photographersID=".$photoID."&UserphotographersID=".$UserID."'><button class='btn btn-sm btn-primary' style='float: right;'>".$fname."</button></a>
+                                                        
+                                                        <a href='reporting.php?photographersID=".$photoID."&photosID=".$photosID."'><i class='fa fa-warning red' style='font-size:24px; float: right;'></i></a>
+                                                        <a href='portfolio.php?photographersID=".$photoID."&UserphotographersID=".$UserID."'><button class='btn btn-sm btn-primary' style='float: left;''>".$fname."</button></a>
                                                     </div>
                                             </div>
+                                        </a>
                                         </div>
                                         
                                         ";

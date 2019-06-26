@@ -204,7 +204,9 @@ $sql = mysqli_query($con->conn,$ssql);
             {
                 while($row = $sql->fetch_assoc()) {
                 $images = $row['photographs'];
+                echo "<a href='$images' title='project name 1'>";
                 echo "<img src='../assets/$images'  alt='pro1'  width='300px;' height='300px;' style='margin: 5px;'/> ";
+                echo "</a>";
                 echo "  ";        
                 }
             }

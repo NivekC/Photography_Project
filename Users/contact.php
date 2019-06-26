@@ -29,7 +29,7 @@ use PHPMailer\PHPMailer\Exception;
                 $photographerID = $row['photographerID'];
                 $Bdate = $row['date']; 
                 $notifyValue = $row['notification'];   
-              if($Bdate<$dates)
+              if(strtotime($Bdate)<strtotime($dates))
                 {
                     $not++;
                 }    
@@ -182,7 +182,7 @@ echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
             <!--main menu -->
             <div class="side_menu_section">
                 <ul class="menu_nav">
-                    <li class="active">
+                    <li>
                         <a href="index.php">
                             Gallery
                         </a>

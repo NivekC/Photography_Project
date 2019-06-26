@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Amani &mdash; Colorlib Website Template</title>
+    <title>Amani</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -56,9 +56,9 @@
         <li><a href="../Authenticator/login.php">Log In</a></li>
       </ul>
       <ul class="social js-clone-nav">
-        <li><a href="#"><span class="icon-facebook"></span></a></li>
-        <li><a href="#"><span class="icon-twitter"></span></a></li>
-        <li><a href="#"><span class="icon-instagram"></span></a></li>
+        <li><a href="https://www.facebook.com/Amani4tographyAndEvents/" target="_blank"><span class="icon-facebook"></span></a></li>
+        <li><a href="https://twitter.com/EventsAmani" target="_blank"><span class="icon-twitter"></span></a></li>
+        <li><a href="https://www.youtube.com/channel/UCj9O2kNajtYSjmuhFHin4kA" target="_blank"><span class="icon-youtube"></span></a></li>
       </ul>
     </div>
   </header> 

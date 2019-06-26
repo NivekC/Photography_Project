@@ -8,7 +8,7 @@
     session_destroy();
     if(!isset($_SESSION['username']))
 {
-    header("location:../authenticator/login.php");
+    header("location:../thumber/index.php");
 }
 
 ?>

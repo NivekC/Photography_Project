@@ -51,7 +51,7 @@
       <ul class="js-clone-nav">
         <li><a href="index.php">Home</a></li>
         <li class="active"><a href="photos.php">Photos</a></li>
-        <li><a href="contact.php">Contact us</a></li>
+        <li><a href="contact.php">About Us</a></li>
         <li><a href="../Authenticator/signUp.php">Sign Up</a></li>
         <li><a href="../Authenticator/login.php">Log In</a></li>
       </ul>

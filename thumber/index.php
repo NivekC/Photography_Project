@@ -51,7 +51,7 @@
       <ul class="js-clone-nav">
         <li class="active"><a href="index.php">Home</a></li>
         <li><a href="photos.php">Photos</a></li>
-        <li><a href="contact.php">Contact us</a></li>
+        <li><a href="contact.php">About Us</a></li>
         <li><a href="../Authenticator/signUp.php">Sign Up</a></li>
         <li><a href="../Authenticator/login.php">Log In</a></li>
       </ul>
@@ -85,7 +85,7 @@
     <span class="btn-toggle-expand"><span class="icon-call_made"></span></span>
     <div class="img-info-content">
       <h2>Relax</h2>
-      <p class="mb-0">SloW down a bit, dont take things so personally! Why take life so seriously? JUST BE HAPPY...</p>
+      <p class="mb-0">Slow down a bit, dont take things so personally! Why take life so seriously? JUST BE HAPPY...</p>
     </div>
   </div>
 </div>
@@ -162,7 +162,7 @@
     <span class="btn-toggle-expand"><span class="icon-call_made"></span></span>
     <div class="img-info-content">
       <h2>Photography & Cameras</h2>
-      <p class="mb-0">If your pictures aren't good enough, you're not close enough.” “Taking pictures is savoring life intensely, every hundredth of a second.</p>
+      <p class="mb-0">If your pictures aren't good enough, you're not close enough.Taking pictures is savoring life intensely, every hundredth of a second.</p>
     </div>
   </div>
 </div>

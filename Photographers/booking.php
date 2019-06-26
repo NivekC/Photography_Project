@@ -235,9 +235,9 @@ if(!isset($_SESSION['username']))
                             </a>
                         </li>
                         <li>
-                            <a href="book.php">
-                                Photos
-                            </a>
+                        <a href="contact.php">
+                            Contact
+                        </a>
                         </li>
                         <li>
                             <a href="../authenticator/logout.php">

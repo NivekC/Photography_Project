@@ -369,7 +369,7 @@ if($resBooking->num_rows > 0)
         $Bdate = $row['date']; 
         $notifyValue = $row['notification'];   
        
-        if($not>=1&&$notifyValue==1){
+        if($notifyValue==1){
             $res =  mysqli_query($con->conn, "SELECT photographers.photographersID,photographers.UserID FROM `photographers` JOIN users ON users.UserID = photographers.UserID WHERE photographersID = '$photographerID'");
         if($res->num_rows > 0)
         {

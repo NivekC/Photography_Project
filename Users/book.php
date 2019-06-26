@@ -62,7 +62,7 @@ if(isset($_POST['book'])){
                 $photographerID = $row['photographerID'];
                 $Bdate = $row['date']; 
                 $notifyValue = $row['notification'];   
-              if($Bdate<$dates)
+              if(strtotime($Bdate)<strtotime($dates))
                 {
                     $not++;
                 }    

@@ -103,7 +103,7 @@ if (!isset($_SESSION['username'])){
                                             <th>Last Name</th>
                                             <th>E-mail</th>
                                             <th>Phone</th>
-                                            <th>Action</th>
+                                            <th>Suspend</th>
                                         </tr>
                                     </thead>
                                     <tbody>
